@@ -32,7 +32,7 @@ berangkat dari subjek: **kelas SMK jurusan rekayasa perangkat lunak & gim**.
 | Headline gradient clip-text | Warna teks solid, satu frasa berwarna `primary-700` | Gradient text adalah penanda template AI |
 | Terminal macOS dengan titik lampu traffic-light | Dihapus sepenuhnya | Kostum "koding" yang dipakaikan, bukan fungsi |
 | Pill badge di hampir setiap data point | Maksimal satu indikator status kecil per item | Badge berlebihan meniadakan hierarki |
-| Penomoran dekoratif `// 01.` pada nilai-nilai | Penomoran hanya di eyebrow section (`01 / Profil Kelas`, … `04 /`) sebagai urutan baca halaman | Nomor hanya boleh menyandikan urutan yang benar-benar ada |
+| Penomoran dekoratif (`// 01.`, eyebrow bernomor per section) | Dihapus total; heading section = `h2` murni | Nomor hanya boleh menyandikan urutan yang benar-benar ada — urutan scroll halaman bukan informasi yang perlu dilabeli |
 | Tag palsu di statistik (`#total_capacity`) | Statistik polos: angka besar mono + label + sublabel | Noise teknis palsu |
 | Navbar gelap + badge versi `v2026.1` + ornamen `</>` | Navbar putih sticky, brand monogram `P1`, toggle tema | Chrome harus tenang agar konten menonjol |
 | Selang-seling section gelap/terang tanpa logika | Halaman terang konsisten (`white` ↔ `neutral-50`), footer gelap sebagai penutup | Kontras gelap-terang acak = dekorasi, bukan informasi |
@@ -98,18 +98,20 @@ Dimuat via Google Fonts `display=swap` di `index.html`.
 
 ## 4. Anatomi Section
 
-Urutan baca halaman ditandai eyebrow bernomor (`01 /` … `04 /`) karena memang urutan navigasi:
+Heading section tanpa eyebrow/label bernomor — hanya `h2` besar (opsional disertai narasi
+satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak dipakai:
 
 1. **Hero** — tipografi editorial murni: konteks sekolah → headline 3 skala → subjudul →
    dua CTA (primer `primary-700`, sekunder netral) → strip metrik 4 kolom di atas garis pemisah.
-2. **01 / Profil** — dua blok asimetris (wali kelas + kutipan blockquote; tiga pilar keahlian
+2. **Profil** — dua blok asimetris (identitas kelas + kutipan tagline; tiga pilar keahlian
    sebagai baris list, bukan kartu ikon).
-3. **02 / Organisasi** — pengurus harian sebagai **daftar ledger** (role: nama — fokus);
-   divisi teknis 3 kartu tenang `neutral-50` (satu-satunya grid; dibenarkan karena 3 divisi paralel setara).
-4. **03 / Karya & Prestasi** — projek sebagai **baris asimetris 12-kolom**
-   (kategori+status | judul+deskripsi+tag | aksi repo/demo), prestasi sebagai **ledger**
-   tahun–judul–peringkat.
-5. **04 / Dokumentasi** — grid responsif postingan Instagram (2 kolom mobile, 3 kolom desktop).
+3. **Struktur** — tab switcher tiga kelas (10, 11, 12; default kelas 12) dengan panel
+   per kelas: dua kartu wali kelas per semester (avatar inisial + nama + mata pelajaran),
+   lalu grid roster 36 kartu (2 officer — ketua & wakil — dengan label mono role di atas nama,
+   + 34 siswa). Avatar inisial + nama + tautan IG opsional. Tanpa divisi terpisah.
+4. **Prestasi** — ledger daftar pencapaian kompetisi: tahun–judul–peringkat–pihak;
+   tanpa showcase projek. Section id `#prestasi`.
+5. **Kegiatan** — grid responsif postingan Instagram (2 kolom mobile, 3 kolom desktop).
    Setiap tile: gambar `aspect-square` + tanggal mono + cuplikan caption 2 baris.
    Tautan ke postingan asli via Instagram permalink. Indikator tipe media (ikon Play/Copy)
    hanya muncul pada postingan VIDEO/CAROUSEL. Fallback: timeline editorial yang sama
@@ -170,6 +172,9 @@ Urutan baca halaman ditandai eyebrow bernomor (`01 /` … `04 /`) karena memang 
 
 - **Semua konten hidup di `src/data/classData.ts`** (bertipe lewat `src/data/types.ts`).
   Komponen hanya merender; mengganti nama/prestasi tidak boleh menyentuh komponen.
+- **`gradeStructures`** berisi data placeholder fiktif untuk tiga angkatan. Setiap entry
+  mencakup wali kelas per semester (dengan mata pelajaran), dua pengurus (ketua & wakil),
+  dan daftar siswa (34 per angkatan). Data ini diedit manual — bukan hasil pipeline.
 - **`src/data/instagram.json` dan `public/ig/*` dihasilkan oleh skrip** (`npm run fetch:instagram`).
   Jangan mengedit file ini secara manual — placeholder SVG di `public/ig/` akan diganti
   dengan foto JPG yang diunduh saat pipeline pertama kali dijalankan.
