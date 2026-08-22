@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { gradeStructures } from "../data/classData";
 import type { GradeStructure } from "../data/types";
-import { Instagram } from "lucide-vue-next";
+import { IconInstagram } from "./icons/social";
 
 const grades = [12, 11, 10] as const;
 const activeGrade = ref<10 | 11 | 12>(12);
@@ -174,7 +174,7 @@ function gradeLabel(g: number): string {
                   class="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                   :aria-label="`Instagram ${officer.name}`"
                 >
-                  <Instagram class="w-3.5 h-3.5" />
+                  <IconInstagram class="w-3.5 h-3.5" />
                   <span>{{ officer.igUsername }}</span>
                 </a>
               </div>
@@ -218,7 +218,7 @@ function gradeLabel(g: number): string {
                   class="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                   :aria-label="`Instagram ${student.name}`"
                 >
-                  <Instagram class="w-3.5 h-3.5" />
+                  <IconInstagram class="w-3.5 h-3.5" />
                   <span>{{ student.igUsername }}</span>
                 </a>
               </div>

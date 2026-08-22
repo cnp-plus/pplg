@@ -42,17 +42,3 @@ html {
     scroll-behavior: auto;
   }
 }
-
-/* Custom scrollbar for horizontal containers */
-.custom-scrollbar::-webkit-scrollbar {
-  height: 2px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
-}
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #374151;
-}

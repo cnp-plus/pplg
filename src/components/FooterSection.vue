@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { classConfig } from "../data/classData";
-import { Mail, Instagram, Github, CheckCircle2 } from "lucide-vue-next";
+import { Mail, CheckCircle2 } from "lucide-vue-next";
+import { IconGithub, IconInstagram } from "./icons/social";
 
 const formSubmitted = ref(false);
 const formData = ref({
@@ -86,7 +87,7 @@ const githubPath = classConfig.socials.github
                 </div>
               </div>
               <div class="flex items-start gap-4">
-                <Instagram class="w-5 h-5 text-primary-300 shrink-0" />
+                <IconInstagram class="w-5 h-5 text-primary-300 shrink-0" />
                 <div class="space-y-1">
                   <span
                     class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest"
@@ -102,7 +103,7 @@ const githubPath = classConfig.socials.github
                 </div>
               </div>
               <div class="flex items-start gap-4">
-                <Github class="w-5 h-5 text-primary-300 shrink-0" />
+                <IconGithub class="w-5 h-5 text-primary-300 shrink-0" />
                 <div class="space-y-1">
                   <span
                     class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest"

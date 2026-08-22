@@ -190,6 +190,8 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
 **Do**
 - Tambah struktur baru yang bentuknya mengikuti jenis datanya.
 - Pakai token warna & pasangan font yang sudah ada.
+- Pakai ikon brand (Instagram/GitHub) dari `src/components/icons/social.ts` —
+  ikon brand di lucide-vue-next deprecated dan bisa hilang di versi berikutnya.
 - Uji build (`npm run build`) dan lihat hasil di mobile sebelum commit.
 - Uji kedua tema (terang & gelap) sebelum push.
 
