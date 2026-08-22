@@ -122,8 +122,6 @@ export const gradeStructures: GradeStructure[] = [
       { name: "Surya Adi Nugraha", igUsername: "surya.adi_" },
       { name: "Ratna Sari Dewi", igUsername: "ratna.sari" },
       { name: "Cahya Permata Sari", igUsername: "cahya.ps" },
-      { name: "Rangga Aditya Putra", igUsername: "rangga.ap" },
-      { name: "Vina Oktaviani" },
     ],
   },
 
@@ -171,8 +169,6 @@ export const gradeStructures: GradeStructure[] = [
       { name: "Angga Dwi Permana" },
       { name: "Ayu Lestari Wulan", igUsername: "ayu.lw" },
       { name: "Tegar Prasetyo", igUsername: "tegar.prasetyo" },
-      { name: "Putri Intan Permata" },
-      { name: "Faris Fadillah" },
     ],
   },
 
@@ -220,8 +216,6 @@ export const gradeStructures: GradeStructure[] = [
       { name: "Anisa Maharani Putri", igUsername: "anisa.mhrn" },
       { name: "Gilang Ramadhan", igUsername: "gilang.rmd" },
       { name: "Winda Oktaviani Putri" },
-      { name: "Surya Adi Nugraha", igUsername: "surya.adi_" },
-      { name: "Ratna Sari Dewi", igUsername: "ratna.sari" },
     ],
   },
 ];

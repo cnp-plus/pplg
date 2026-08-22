@@ -107,8 +107,8 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
    sebagai baris list, bukan kartu ikon).
 3. **Struktur** — tab switcher tiga kelas (10, 11, 12; default kelas 12) dengan panel
    per kelas: dua kartu wali kelas per semester (avatar inisial + nama + mata pelajaran),
-   lalu grid roster 36 kartu (2 officer — ketua & wakil — dengan label mono role di atas nama,
-   + 34 siswa). Avatar inisial + nama + tautan IG opsional. Tanpa divisi terpisah.
+  lalu grid roster 34 kartu (2 officer — ketua & wakil — dengan label mono role di atas nama,
+  + 32 siswa). Avatar inisial + nama + tautan IG opsional. Tanpa divisi terpisah.
 4. **Prestasi** — ledger daftar pencapaian kompetisi: tahun–judul–peringkat–pihak;
    tanpa showcase projek. Section id `#prestasi`.
 5. **Kegiatan** — grid responsif postingan Instagram (2 kolom mobile, 3 kolom desktop).
@@ -174,7 +174,8 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
   Komponen hanya merender; mengganti nama/prestasi tidak boleh menyentuh komponen.
 - **`gradeStructures`** berisi data placeholder fiktif untuk tiga angkatan. Setiap entry
   mencakup wali kelas per semester (dengan mata pelajaran), dua pengurus (ketua & wakil),
-  dan daftar siswa (34 per angkatan). Data ini diedit manual — bukan hasil pipeline.
+  dan daftar siswa (32 per angkatan; total roster 34 termasuk ketua & wakil).
+  Data ini diedit manual — bukan hasil pipeline.
 - **`src/data/instagram.json` dan `public/ig/*` dihasilkan oleh skrip** (`npm run fetch:instagram`).
   Jangan mengedit file ini secara manual — placeholder SVG di `public/ig/` akan diganti
   dengan foto JPG yang diunduh saat pipeline pertama kali dijalankan.
