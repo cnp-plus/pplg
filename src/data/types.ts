@@ -17,42 +17,6 @@ export interface FocusArea {
   techs: string[];
 }
 
-export interface ClassLeader {
-  role: string;
-  name: string;
-  nisn?: string;
-  bio: string;
-  quote?: string;
-  avatarSeed: string;
-  focus: string;
-}
-
-export interface Division {
-  id: string;
-  name: string;
-  code: string;
-  lead: string;
-  membersCount: number;
-  description: string;
-  currentProject: string;
-  stack: string[];
-}
-
-export interface ProjectShowcase {
-  id: string;
-  title: string;
-  category: 'Web App' | 'Game Dev' | 'Mobile App' | 'IoT / System';
-  summary: string;
-  description: string;
-  author: string;
-  division: string;
-  status: 'Rilis v1.0' | 'Tahap Beta' | 'Juara 1 LKS' | 'Open Source';
-  statusType: 'success' | 'highlight' | 'warning';
-  tags: string[];
-  repoUrl?: string;
-  demoUrl?: string;
-}
-
 export interface AchievementItem {
   id: string;
   year: string;
@@ -92,13 +56,6 @@ export interface ClassConfig {
   academicYear: string;
   room: string;
   tagline: string;
-  homeroomTeacher: {
-    name: string;
-    nip: string;
-    title: string;
-    quote: string;
-    subject: string;
-  };
   socials: {
     instagram: string;
     github: string;
@@ -110,4 +67,28 @@ export interface ClassConfig {
     location: string;
     labName: string;
   };
+}
+
+export interface SemesterTeacher {
+  semester: 1 | 2;
+  name: string;
+  subject: string;
+  avatarUrl?: string;
+}
+
+export interface Student {
+  name: string;
+  igUsername?: string;
+  avatarUrl?: string;
+}
+
+export interface OfficerStudent extends Student {
+  role: 'Ketua Kelas' | 'Wakil Ketua Kelas';
+}
+
+export interface GradeStructure {
+  grade: 10 | 11 | 12;
+  waliKelas: [SemesterTeacher, SemesterTeacher];
+  officers: [OfficerStudent, OfficerStudent];
+  students: Student[];
 }
