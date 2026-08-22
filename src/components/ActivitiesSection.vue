@@ -1,61 +1,73 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { InstagramFeed } from '../data/types'
-import { activitiesData, classConfig } from '../data/classData'
-import { ArrowUpRight, Play, Copy } from 'lucide-vue-next'
-import feedData from '../data/instagram.json'
+import { computed } from "vue";
+import type { InstagramFeed } from "../data/types";
+import { activitiesData, classConfig } from "../data/classData";
+import { ArrowUpRight, Play, Copy } from "lucide-vue-next";
+import feedData from "../data/instagram.json";
 
-const feed = feedData as InstagramFeed
-const posts = computed(() => feed.posts)
-const hasPosts = computed(() => posts.value.length > 0)
+const feed = feedData as InstagramFeed;
+const posts = computed(() => feed.posts);
+const hasPosts = computed(() => posts.value.length > 0);
 
 function formatDate(iso: string): string {
-  const d = new Date(iso)
-  const day = d.getDate()
-  const month = d.toLocaleString('id-ID', { month: 'short' })
-  return `${day} ${month}`
+  const d = new Date(iso);
+  const day = d.getDate();
+  const month = d.toLocaleString("id-ID", { month: "short" });
+  return `${day} ${month}`;
 }
 
 function snippet(caption: string, max = 90): string {
-  if (caption.length <= max) return caption
-  return caption.slice(0, max).replace(/\s+\S*$/, '') + '…'
+  if (caption.length <= max) return caption;
+  return caption.slice(0, max).replace(/\s+\S*$/, "") + "…";
 }
 
 function mediaIcon(type: string) {
-  if (type === 'VIDEO') return Play
-  if (type === 'CAROUSEL_ALBUM') return Copy
-  return null
+  if (type === "VIDEO") return Play;
+  if (type === "CAROUSEL_ALBUM") return Copy;
+  return null;
 }
 
 const igHandle = computed(() => {
-  const url = classConfig.socials.instagram
-  const match = url.match(/instagram\.com\/([^/]+)/)
-  return match ? `@${match[1]}` : '@pplg1'
-})
+  const url = classConfig.socials.instagram;
+  const match = url.match(/instagram\.com\/([^/]+)/);
+  return match ? `@${match[1]}` : "@pplg1";
+});
 </script>
 
 <template>
-  <section id="kegiatan" class="py-20 lg:py-28 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50">
+  <section
+    id="kegiatan"
+    class="py-20 lg:py-28 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50"
+  >
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
-
       <!-- Section Header -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
         <div class="lg:col-span-5 space-y-3">
-          <span class="text-xs font-mono uppercase tracking-widest text-primary-700 dark:text-primary-300 font-bold">04 / Dokumentasi</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h2
+            class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100"
+          >
             Kegiatan Terakhir di Instagram
           </h2>
         </div>
         <div class="lg:col-span-7">
           <p class="text-neutral-600 dark:text-neutral-400 text-base">
-            Postingan diperbarui otomatis dari
-            <a :href="classConfig.socials.instagram" target="_blank" rel="noopener noreferrer" class="text-primary-700 dark:text-primary-300 hover:underline">{{ igHandle }}</a>.
+            Postingan diperbarui otomatis dari instagram
+            <a
+              :href="classConfig.socials.instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-primary-700 dark:text-primary-300 hover:underline"
+              >{{ igHandle }}</a
+            >.
           </p>
         </div>
       </div>
 
       <!-- Instagram Feed Grid -->
-      <div v-if="hasPosts" class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+      <div
+        v-if="hasPosts"
+        class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
+      >
         <a
           v-for="post in posts"
           :key="post.id"
@@ -66,7 +78,9 @@ const igHandle = computed(() => {
           :aria-label="`Buka postingan Instagram: ${snippet(post.caption, 50)}`"
         >
           <!-- Image tile -->
-          <div class="relative aspect-square overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700/60">
+          <div
+            class="relative aspect-square overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700/60"
+          >
             <img
               :src="post.mediaUrl"
               :alt="snippet(post.caption, 80)"
@@ -79,21 +93,31 @@ const igHandle = computed(() => {
               v-if="mediaIcon(post.mediaType)"
               class="absolute top-2 left-2 w-6 h-6 rounded bg-black/40 flex items-center justify-center"
             >
-              <component :is="mediaIcon(post.mediaType)" class="w-3.5 h-3.5 text-white" />
+              <component
+                :is="mediaIcon(post.mediaType)"
+                class="w-3.5 h-3.5 text-white"
+              />
             </div>
 
             <!-- Arrow cue (top-right, appears on hover) -->
-            <div class="absolute top-2 right-2 w-6 h-6 rounded bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div
+              class="absolute top-2 right-2 w-6 h-6 rounded bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            >
               <ArrowUpRight class="w-3.5 h-3.5 text-white" />
             </div>
           </div>
 
           <!-- Caption below tile -->
           <div class="mt-3 space-y-1">
-            <time class="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider" :datetime="post.timestamp">
+            <time
+              class="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider"
+              :datetime="post.timestamp"
+            >
               {{ formatDate(post.timestamp) }}
             </time>
-            <p class="text-sm text-neutral-700 dark:text-neutral-300 leading-snug line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors duration-200">
+            <p
+              class="text-sm text-neutral-700 dark:text-neutral-300 leading-snug line-clamp-2 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors duration-200"
+            >
               {{ snippet(post.caption) }}
             </p>
           </div>
@@ -109,28 +133,45 @@ const igHandle = computed(() => {
         >
           <!-- Date Column -->
           <div class="md:w-32 shrink-0">
-            <span class="text-xs font-mono font-bold text-neutral-400 dark:text-neutral-500 block uppercase tracking-wider">{{ act.date.split(' ').slice(1).join(' ') }}</span>
-            <span class="text-2xl font-extrabold text-neutral-900 dark:text-neutral-100 block leading-none mt-1">{{ act.date.split(' ')[0] }}</span>
+            <span
+              class="text-xs font-mono font-bold text-neutral-400 dark:text-neutral-500 block uppercase tracking-wider"
+              >{{ act.date.split(" ").slice(1).join(" ") }}</span
+            >
+            <span
+              class="text-2xl font-extrabold text-neutral-900 dark:text-neutral-100 block leading-none mt-1"
+              >{{ act.date.split(" ")[0] }}</span
+            >
           </div>
 
           <!-- Content Column -->
           <div class="flex-1 space-y-4">
             <div class="space-y-1">
-              <span class="text-[10px] font-mono font-bold text-primary-700 dark:text-primary-300 uppercase tracking-widest">{{ act.badge }}</span>
-              <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
+              <span
+                class="text-[10px] font-mono font-bold text-primary-700 dark:text-primary-300 uppercase tracking-widest"
+                >{{ act.badge }}</span
+              >
+              <h3
+                class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors"
+              >
                 {{ act.title }}
               </h3>
             </div>
-            <p class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-2xl">
+            <p
+              class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed max-w-2xl"
+            >
               {{ act.description }}
             </p>
             <div class="flex flex-wrap gap-3">
-              <span v-for="tg in act.tags" :key="tg" class="text-[11px] font-mono text-neutral-400 dark:text-neutral-500">#{{ tg.toUpperCase() }}</span>
+              <span
+                v-for="tg in act.tags"
+                :key="tg"
+                class="text-[11px] font-mono text-neutral-400 dark:text-neutral-500"
+                >#{{ tg.toUpperCase() }}</span
+              >
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </template>
