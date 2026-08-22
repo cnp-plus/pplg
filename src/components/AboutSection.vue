@@ -10,7 +10,6 @@ import { BookOpen, MapPin } from 'lucide-vue-next';
       <!-- Editorial Section Heading -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
         <div class="lg:col-span-5 space-y-3">
-          <span class="text-xs font-mono uppercase tracking-widest text-primary-700 dark:text-primary-300 font-bold">01 / Profil Kelas</span>
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100">
             Lingkungan Belajar Berbasis Industri
           </h2>
@@ -25,27 +24,27 @@ import { BookOpen, MapPin } from 'lucide-vue-next';
       <!-- Editorial Information Grid (No uniform card rows) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
         
-        <!-- Homeroom Teacher Statement Block -->
+        <!-- School Identity Block -->
         <div class="lg:col-span-6 bg-white dark:bg-neutral-800 p-8 rounded-lg border border-neutral-300 dark:border-neutral-700/60 flex flex-col justify-between space-y-6">
           <div class="space-y-4">
-            <div class="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase">Wali Kelas PPLG 1</div>
+            <div class="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase">Identitas Kelas</div>
             <div>
-              <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{{ classConfig.homeroomTeacher.name }}</h3>
-              <p class="text-xs font-mono text-primary-700 dark:text-primary-300 mt-1">NIP. {{ classConfig.homeroomTeacher.nip }}</p>
+              <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{{ classConfig.className }}</h3>
+              <p class="text-xs font-mono text-primary-700 dark:text-primary-300 mt-1">{{ classConfig.academicYear }}</p>
             </div>
             <blockquote class="text-neutral-700 dark:text-neutral-300 italic border-l-2 border-primary-700 dark:border-primary-400 pl-4 py-1 text-sm sm:text-base">
-              "{{ classConfig.homeroomTeacher.quote }}"
+              "{{ classConfig.tagline }}"
             </blockquote>
           </div>
 
           <div class="pt-6 border-t border-neutral-200 dark:border-neutral-700/60 space-y-2 text-xs font-mono text-neutral-600 dark:text-neutral-400">
             <div class="flex items-center gap-2">
               <BookOpen class="w-4 h-4 text-primary-700 shrink-0" />
-              <span>Mapel: {{ classConfig.homeroomTeacher.subject }}</span>
+              <span>Sekolah: {{ classConfig.schoolName }}</span>
             </div>
             <div class="flex items-center gap-2">
               <MapPin class="w-4 h-4 text-primary-700 shrink-0" />
-              <span>Lokasi: {{ classConfig.room }}</span>
+              <span>Lokasi: {{ classConfig.contact.location }} &middot; {{ classConfig.room }}</span>
             </div>
           </div>
         </div>
