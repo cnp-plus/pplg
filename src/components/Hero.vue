@@ -25,8 +25,8 @@ import { ArrowRight } from "lucide-vue-next";
         <h1
           class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100 leading-[1.08]"
         >
-          Kelas Rekayasa Perangkat Lunak & Gim
-          <span class="text-primary-700 dark:text-primary-300">PPLG 1</span>.
+          Pengembangan Perangkat Lunak & Gim
+          <span class="text-primary-700 dark:text-primary-300">(PPLG 1)</span>
         </h1>
 
         <!-- Subtitle -->

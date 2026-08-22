@@ -17,7 +17,7 @@ export const classConfig: ClassConfig = {
     "Merancang Algoritma, Mengukir Kode, Menciptakan Masa Depan Digital.",
   socials: {
     instagram: "https://www.instagram.com/_xiirone1_/",
-    github: "https://github.com/pplg1-class",
+    github: "https://github.com/cnp-plus/pplg",
     discord: "https://discord.gg/pplg1-community",
   },
   contact: {
@@ -53,27 +53,27 @@ export const statsData: StatItem[] = [
 export const focusAreas: FocusArea[] = [
   {
     id: "web",
-    title: "Pengembangan Web",
+    title: "Pemrograman Web",
     iconName: "Code2",
     description:
-      "Fokus pada arsitektur frontend modern, RESTful API, serta integrasi basis data relasional.",
-    techs: ["Vue.js", "TypeScript", "Tailwind CSS", "Laravel", "PostgreSQL"],
+      "Fokus pada pemahaman mendalam, serta integrasi basis data relasional.",
+    techs: ["HTML", "CSS", "JavaScript", "PHP"],
   },
   {
     id: "mobile",
-    title: "Aplikasi Mobile",
+    title: "Pemrograman Perangkat Bergerak",
     iconName: "Smartphone",
     description:
-      "Membangun aplikasi lintas platform dengan performa tinggi dan antarmuka pengguna yang intuitif.",
-    techs: ["Flutter", "Dart", "Firebase", "REST API", "SQLite"],
+      "Membangun aplikasi mobile dengan performa tinggi dan UI yang intuitif.",
+    techs: ["Flutter", "Dart", "Kotlin"],
   },
   {
-    id: "game",
-    title: "Pengembangan Gim",
+    id: "dbms",
+    title: "Basis Data",
     iconName: "Gamepad2",
     description:
-      "Eksplorasi logika permainan 2D/3D, mekanik gim, desain aset pixel art, dan optimalisasi sistem.",
-    techs: ["Unity", "C#", "Godot Engine", "Blender 3D", "Pixel Logic"],
+      "Mengintegrasikan aplikasi dengan data base, serta pemahaman CRUD yang mendalam.",
+    techs: ["XAMPP", "MySQL", "MariaDB"],
   },
 ];
 
@@ -82,12 +82,28 @@ export const gradeStructures: GradeStructure[] = [
   {
     grade: 10,
     waliKelas: [
-      { semester: 1, name: "Dra. Sri Mulyani, M.Pd.", subject: "Produktif RPL · Wali Kelas Sem 1" },
-      { semester: 2, name: "Dra. Sri Mulyani, M.Pd.", subject: "Produktif RPL · Wali Kelas Sem 2" },
+      {
+        semester: 1,
+        name: "Dra. Sri Mulyani, M.Pd.",
+        subject: "Produktif RPL · Wali Kelas Sem 1",
+      },
+      {
+        semester: 2,
+        name: "Dra. Sri Mulyani, M.Pd.",
+        subject: "Produktif RPL · Wali Kelas Sem 2",
+      },
     ],
     officers: [
-      { role: "Ketua Kelas", name: "Arif Setiawan", igUsername: "arif.setiawan_" },
-      { role: "Wakil Ketua Kelas", name: "Putri Ayu Lestari", igUsername: "putri.ayu.l" },
+      {
+        role: "Ketua Kelas",
+        name: "Arif Setiawan",
+        igUsername: "arif.setiawan_",
+      },
+      {
+        role: "Wakil Ketua Kelas",
+        name: "Putri Ayu Lestari",
+        igUsername: "putri.ayu.l",
+      },
     ],
     students: [
       { name: "Dimas Aditya Nugroho" },
@@ -129,12 +145,24 @@ export const gradeStructures: GradeStructure[] = [
   {
     grade: 11,
     waliKelas: [
-      { semester: 1, name: "Rudi Hartono, S.Kom.", subject: "Basis Data · Wali Kelas Sem 1" },
-      { semester: 2, name: "Rudi Hartono, S.Kom.", subject: "Basis Data · Wali Kelas Sem 2" },
+      {
+        semester: 1,
+        name: "Rudi Hartono, S.Kom.",
+        subject: "Basis Data · Wali Kelas Sem 1",
+      },
+      {
+        semester: 2,
+        name: "Rudi Hartono, S.Kom.",
+        subject: "Basis Data · Wali Kelas Sem 2",
+      },
     ],
     officers: [
       { role: "Ketua Kelas", name: "Fajar Ramadhan", igUsername: "fajar.rmd" },
-      { role: "Wakil Ketua Kelas", name: "Nabila Putri", igUsername: "nabila.putri_" },
+      {
+        role: "Wakil Ketua Kelas",
+        name: "Nabila Putri",
+        igUsername: "nabila.putri_",
+      },
     ],
     students: [
       { name: "Ahmad Fauzi", igUsername: "ahmad.fauzi" },
@@ -176,12 +204,28 @@ export const gradeStructures: GradeStructure[] = [
   {
     grade: 12,
     waliKelas: [
-      { semester: 1, name: "Drs. Hendra Wijaya, M.Kom.", subject: "PBO · Wali Kelas Sem 1" },
-      { semester: 2, name: "Dewi Anggraini, S.Kom., M.T.", subject: "Matematika · Wali Kelas Sem 2" },
+      {
+        semester: 1,
+        name: "Drs. Hendra Wijaya, M.Kom.",
+        subject: "PBO · Wali Kelas Sem 1",
+      },
+      {
+        semester: 2,
+        name: "Dewi Anggraini, S.Kom., M.T.",
+        subject: "Matematika · Wali Kelas Sem 2",
+      },
     ],
     officers: [
-      { role: "Ketua Kelas", name: "Muhammad Rizky Pratama", igUsername: "rizky.pratama_" },
-      { role: "Wakil Ketua Kelas", name: "Siti Nurhaliza", igUsername: "siti.nurhaliza" },
+      {
+        role: "Ketua Kelas",
+        name: "Muhammad Rizky Pratama",
+        igUsername: "rizky.pratama_",
+      },
+      {
+        role: "Wakil Ketua Kelas",
+        name: "Siti Nurhaliza",
+        igUsername: "siti.nurhaliza",
+      },
     ],
     students: [
       { name: "Ahmad Fauzi" },

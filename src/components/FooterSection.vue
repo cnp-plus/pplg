@@ -1,53 +1,73 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { classConfig } from '../data/classData';
-import { Mail, Instagram, Github, CheckCircle2 } from 'lucide-vue-next';
+import { ref } from "vue";
+import { classConfig } from "../data/classData";
+import { Mail, Instagram, Github, CheckCircle2 } from "lucide-vue-next";
 
 const formSubmitted = ref(false);
 const formData = ref({
-  name: '',
-  email: '',
-  subject: 'Tanya/Kerjasama',
-  message: ''
+  name: "",
+  email: "",
+  subject: "Tanya/Kerjasama",
+  message: "",
 });
 
 const handleSubmit = () => {
-  if (!formData.value.name || !formData.value.email || !formData.value.message) return;
+  if (!formData.value.name || !formData.value.email || !formData.value.message)
+    return;
 
   // Situs statis tanpa backend: susun email ke pengurus kelas via mailto.
-  const subject = encodeURIComponent(`[Website PPLG 1] ${formData.value.subject || 'Pesan dari website'}`);
+  const subject = encodeURIComponent(
+    `[Website PPLG 1] ${formData.value.subject || "Pesan dari website"}`,
+  );
   const body = encodeURIComponent(
-    `Nama: ${formData.value.name}\nEmail: ${formData.value.email}\n\n${formData.value.message}`
+    `Nama: ${formData.value.name}\nEmail: ${formData.value.email}\n\n${formData.value.message}`,
   );
   window.location.href = `mailto:${classConfig.contact.email}?subject=${subject}&body=${body}`;
 
   formSubmitted.value = true;
   setTimeout(() => {
     formSubmitted.value = false;
-    formData.value = { name: '', email: '', subject: 'Tanya/Kerjasama', message: '' };
+    formData.value = {
+      name: "",
+      email: "",
+      subject: "Tanya/Kerjasama",
+      message: "",
+    };
   }, 4000);
 };
 
-const instagramHandle = classConfig.socials.instagram.replace(/\/$/, '').split('/').pop() ?? '';
-const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const instagramHandle =
+  classConfig.socials.instagram.replace(/\/$/, "").split("/").pop() ?? "";
+const githubPath = classConfig.socials.github
+  .replace(/^https?:\/\/(www\.)?/, "")
+  .replace(/\/$/, "");
 </script>
 
 <template>
-  <footer id="kontak" class="bg-neutral-900 text-white pt-24 pb-12 border-t border-neutral-800 dark:border-neutral-700">
+  <footer
+    id="kontak"
+    class="bg-neutral-900 text-white pt-24 pb-12 border-t border-neutral-800 dark:border-neutral-700"
+  >
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
-      
       <!-- Footer Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 pb-16 border-b border-neutral-800 dark:border-neutral-700/60">
-        
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-16 pb-16 border-b border-neutral-800 dark:border-neutral-700/60"
+      >
         <!-- Left: Branding & Contact Info -->
         <div class="lg:col-span-5 space-y-10">
           <div class="space-y-4">
-            <div class="w-12 h-12 bg-primary-700 text-white font-mono font-bold text-lg flex items-center justify-center rounded">
+            <div
+              class="w-12 h-12 bg-primary-700 text-white font-mono font-bold text-lg flex items-center justify-center rounded"
+            >
               P1
             </div>
             <div class="space-y-2">
-              <h3 class="text-3xl font-extrabold tracking-tight">{{ classConfig.className }}</h3>
-              <p class="text-sm text-neutral-400 font-mono">{{ classConfig.schoolName }}</p>
+              <h3 class="text-3xl font-extrabold tracking-tight">
+                {{ classConfig.className }}
+              </h3>
+              <p class="text-sm text-neutral-400 font-mono">
+                {{ classConfig.schoolName }}
+              </p>
             </div>
           </div>
 
@@ -56,22 +76,45 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
               <div class="flex items-start gap-4">
                 <Mail class="w-5 h-5 text-primary-300 shrink-0" />
                 <div class="space-y-1">
-                  <span class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Surat Elektronik</span>
-                  <span class="font-medium">{{ classConfig.contact.email }}</span>
+                  <span
+                    class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest"
+                    >Email</span
+                  >
+                  <span class="font-medium">{{
+                    classConfig.contact.email
+                  }}</span>
                 </div>
               </div>
               <div class="flex items-start gap-4">
                 <Instagram class="w-5 h-5 text-primary-300 shrink-0" />
                 <div class="space-y-1">
-                  <span class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Media Sosial</span>
-                  <a :href="classConfig.socials.instagram" target="_blank" rel="noopener noreferrer" class="font-medium hover:text-white transition-colors">{{ instagramHandle }}</a>
+                  <span
+                    class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest"
+                    >Media Sosial</span
+                  >
+                  <a
+                    :href="classConfig.socials.instagram"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-medium hover:text-white transition-colors"
+                    >{{ instagramHandle }}</a
+                  >
                 </div>
               </div>
               <div class="flex items-start gap-4">
                 <Github class="w-5 h-5 text-primary-300 shrink-0" />
                 <div class="space-y-1">
-                  <span class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">Open Source</span>
-                  <a :href="classConfig.socials.github" target="_blank" rel="noopener noreferrer" class="font-medium hover:text-white transition-colors">{{ githubPath }}</a>
+                  <span
+                    class="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest"
+                    >Source Code</span
+                  >
+                  <a
+                    :href="classConfig.socials.github"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-medium hover:text-white transition-colors"
+                    >{{ githubPath }}</a
+                  >
                 </div>
               </div>
             </div>
@@ -81,14 +124,22 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
         <!-- Right: Message Form -->
         <div class="lg:col-span-7">
           <div class="mb-8 space-y-2">
-            <h4 class="text-xl font-bold font-mono uppercase tracking-tight">Hubungi Kami</h4>
-            <p class="text-sm text-neutral-400">Gunakan formulir ini untuk pertanyaan seputar kerjasama atau kunjungan industri.</p>
+            <h4 class="text-xl font-bold font-mono uppercase tracking-tight">
+              Hubungi Kami
+            </h4>
+            <p class="text-sm text-neutral-400">
+              Gunakan formulir ini untuk pertanyaan seputar kerjasama atau
+              kunjungan industri.
+            </p>
           </div>
 
           <form @submit.prevent="handleSubmit" class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div class="space-y-1.5">
-                <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Nama</label>
+                <label
+                  class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider"
+                  >Nama</label
+                >
                 <input
                   v-model="formData.name"
                   type="text"
@@ -98,7 +149,10 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
                 />
               </div>
               <div class="space-y-1.5">
-                <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Email</label>
+                <label
+                  class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider"
+                  >Email</label
+                >
                 <input
                   v-model="formData.email"
                   type="email"
@@ -110,7 +164,10 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
             </div>
 
             <div class="space-y-1.5">
-              <label class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">Pesan</label>
+              <label
+                class="text-[10px] font-mono text-neutral-500 uppercase tracking-wider"
+                >Pesan</label
+              >
               <textarea
                 v-model="formData.message"
                 required
@@ -128,8 +185,15 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
                 KIRIM SEKARANG
               </button>
 
-              <transition enter-active-class="transition duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100">
-                <span v-if="formSubmitted" class="inline-flex items-center gap-2 text-xs font-mono text-accent-success">
+              <transition
+                enter-active-class="transition duration-200"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+              >
+                <span
+                  v-if="formSubmitted"
+                  class="inline-flex items-center gap-2 text-xs font-mono text-accent-success"
+                >
                   <CheckCircle2 class="w-4 h-4" />
                   <span>Membuka aplikasi email Anda&hellip;</span>
                 </span>
@@ -137,20 +201,22 @@ const githubPath = classConfig.socials.github.replace(/^https?:\/\/(www\.)?/, ''
             </div>
           </form>
         </div>
-
       </div>
 
       <!-- Footer Bottom -->
-      <div class="pt-10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono text-neutral-500 uppercase tracking-widest gap-4">
+      <div
+        class="pt-10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono text-neutral-500 uppercase tracking-widest gap-4"
+      >
         <div>
-          &copy; {{ new Date().getFullYear() }} {{ classConfig.className }} &middot; {{ classConfig.schoolName.toUpperCase() }}.
+          &copy; {{ new Date().getFullYear() }}
+          {{ classConfig.className }} &middot;
+          {{ classConfig.schoolName.toUpperCase() }}.
         </div>
         <div class="flex items-center gap-6">
-          <a href="#" class="hover:text-white transition-colors">Atas ↑</a>
-          <span>Dibuat Oleh Siswa PPLG 1</span>
+          <a href="#" class="hover:text-white transition-colors">UP ↑</a>
+          <span>Dibuat Oleh Hasan</span>
         </div>
       </div>
-
     </div>
   </footer>
 </template>
