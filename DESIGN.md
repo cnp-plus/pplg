@@ -119,23 +119,34 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
 6. **Footer** — satu-satunya permukaan gelap (`neutral-900`): branding `P1`, kontak,
    sosmed, form pesan (mailto), copyright. Di mode gelap dipisahkan dari page dengan border-top.
 
-## 5. Tema: Otomatis Mengikuti Sistem
+## 5. Tema: Terang / Gelap (Kunjungan Pertama Ikut Sistem)
 
 ### Perilaku
 
-- **Tanpa kontrol pengguna** — tidak ada toggle di UI. Tema sepenuhnya mengikuti
-  preferensi sistem pengunjung via `prefers-color-scheme`.
-- **FOUC prevention**: skrip inline di `<head>` (`index.html`) menerapkan kelas `.dark`
-  pada `<html>` sebelum paint pertama, dan memasang listener `matchMedia` agar perubahan
-  preferensi OS mengikuti secara real-time tanpa reload.
+- **Kunjungan pertama** (tanpa preferensi tersimpan): tema mengikuti
+  `prefers-color-scheme` pengunjung secara real-time.
+- **Toggle di navbar** (desktop & mobile): beralih terang <-> gelap. Pilihan disimpan
+  di `localStorage` dengan key `pplg-theme`; setelah tersimpan, pilihan itu
+  mengalahkan preferensi sistem.
+- **FOUC prevention**: skrip inline di `<head>` (`index.html`) membaca localStorage /
+  `matchMedia` dan menerapkan kelas `.dark` pada `<html>` sebelum paint pertama.
+- **Tanpa opsi "system"** pada toggle — hanya dua mode.
 - **Tailwind v4**: Dark mode dikonfigurasi via `@custom-variant dark (&:where(.dark, .dark *));`
   di `src/style.css`. Semua komponen menggunakan prefix `dark:` untuk override.
+
+### Toggle UI
+
+- Satu tombol ikon (`Sun` / `Moon` dari `lucide-vue-next`) yang menampilkan mode tujuan:
+  terang aktif → tampil `Moon`; gelap aktif → tampil `Sun`.
+- `aria-label` "Aktifkan mode gelap/terang", `title` berisi nama mode tujuan,
+  focus ring sesuai standar §8.
 
 ### Konsekuensi desain
 
 - Kedua mode harus selalu sama kuat: setiap permukaan, teks, border, dan aset wajib punya
   pasangan `dark:` yang teruji — tidak ada asumsi "default terang".
-- Tidak ada state tema di `localStorage`; satu-satunya sumber kebenaran adalah OS.
+- State tema hanya ada di `localStorage` setelah pengguna men-toggle; hapus key
+  `pplg-theme` untuk kembali mengikuti sistem.
 - Uji wajib sebelum commit: lihat situs dalam kedua mode (aturan §8).
 
 ## 6. Interaksi & Motion

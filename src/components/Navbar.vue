@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { classConfig, navItems } from '../data/classData';
-import { Menu, X } from 'lucide-vue-next';
+import { Menu, X, Sun, Moon } from 'lucide-vue-next';
+import { themeMode, toggleTheme } from '../composables/useTheme';
 
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
@@ -88,10 +89,34 @@ onUnmounted(() => {
         >
           {{ item.label }}
         </a>
+
+        <!-- Theme Toggle (Desktop): terang <-> gelap -->
+        <button
+          type="button"
+          @click="toggleTheme"
+          class="ml-2 p-2 rounded text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-700"
+          :aria-label="themeMode === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'"
+          :title="themeMode === 'dark' ? 'Mode terang' : 'Mode gelap'"
+        >
+          <Sun v-if="themeMode === 'dark'" class="w-4 h-4" />
+          <Moon v-else class="w-4 h-4" />
+        </button>
       </nav>
 
       <!-- Mobile Controls -->
       <div class="flex items-center gap-2 md:hidden">
+        <!-- Theme Toggle (Mobile) -->
+        <button
+          type="button"
+          @click="toggleTheme"
+          class="p-2 rounded text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-700"
+          :aria-label="themeMode === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'"
+          :title="themeMode === 'dark' ? 'Mode terang' : 'Mode gelap'"
+        >
+          <Sun v-if="themeMode === 'dark'" class="w-5 h-5" />
+          <Moon v-else class="w-5 h-5" />
+        </button>
+
         <button
           type="button"
           @click="toggleMenu"

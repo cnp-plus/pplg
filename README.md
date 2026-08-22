@@ -1,6 +1,6 @@
 # Website Kelas PPLG 1
 
-Website statis satu halaman untuk kelas **PPLG 1** (Pengembangan Perangkat Lunak dan Gim) — menampilkan profil kelas, struktur pengurus & siswa per angkatan, prestasi, dokumentasi kegiatan (feed Instagram), dan kontak. Tema otomatis mengikuti sistem (terang & gelap).
+Website statis satu halaman untuk kelas **PPLG 1** (Pengembangan Perangkat Lunak dan Gim) — menampilkan profil kelas, struktur pengurus & siswa per angkatan, prestasi, dokumentasi kegiatan (feed Instagram), dan kontak. Tema terang/gelap dengan toggle di navbar; kunjungan pertama otomatis ikut sistem.
 
 ## Teknologi
 
@@ -30,14 +30,14 @@ npm run preview # pratinjau hasil build produksi
 │   └── favicon.svg             # Favicon kelas (monogram < 1 >)
 ├── src/
 │   ├── components/             # Satu komponen per section
-│   │   ├── Navbar.vue          # Navigasi sticky + menu mobile
+│   │   ├── Navbar.vue          # Navigasi sticky + toggle terang/gelap + menu mobile
 │   │   ├── Hero.vue            # Hero tipografi editorial + strip metrik
 │   │   ├── AboutSection.vue    # Profil wali kelas, visi, pilar keahlian
 │   │   ├── StructureSection.vue# Pengurus harian (ledger) & divisi teknis
 │   │   ├── ShowcaseSection.vue # Karya siswa (baris asimetris) + prestasi (ledger)
 │   │   ├── ActivitiesSection.vue # Timeline dokumentasi kegiatan
 │   │   └── FooterSection.vue   # Kontak, sosmed, form pesan (mailto)
-│   ├── composables/            # Composable (useReveal untuk motion anime.js)
+│   ├── composables/            # Composable (useTheme untuk tema terang/gelap, useReveal untuk motion anime.js)
 │   ├── data/
 │   │   ├── types.ts            # Interface TypeScript semua data
 │   │   └── classData.ts        # ⭐ SEMUA KONTEN KELAS ADA DI SINI
@@ -104,5 +104,5 @@ Arah visual, anatomi section, dan aturan desain (termasuk daftar pola AI-slop ya
 ## Catatan
 
 - Form "Kirim Pesan" di footer bekerja tanpa backend: membuka aplikasi email dengan isi pesan terisi otomatis (`mailto:`) ke email kelas.
-- **Tema**: Otomatis mengikuti preferensi sistem (`prefers-color-scheme`) secara real-time — terang saat OS terang, gelap saat OS gelap. Tidak ada tombol tema; satu-satunya sumber kebenaran adalah OS.
+- **Tema**: Toggle di navbar beralih antara mode Terang dan Gelap (tanpa opsi "system"). Pilihan disimpan di localStorage (`pplg-theme`). Kunjungan pertama tanpa pilihan tersimpan otomatis mengikuti preferensi OS secara real-time.
 - Situs sepenuhnya statis — hasil build di `dist/` bisa di-deploy ke Netlify, Vercel, GitHub Pages, atau hosting statis apa pun.
