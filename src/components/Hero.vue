@@ -49,10 +49,10 @@ import { ArrowRight } from "lucide-vue-next";
           </a>
 
           <a
-            href="#karya"
+            href="#prestasi"
             class="inline-flex items-center gap-2 px-6 py-3.5 rounded text-sm font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors border border-neutral-300 dark:border-neutral-600"
           >
-            <span>Jelajahi Projek Siswa</span>
+            <span>Lihat Prestasi Kami</span>
           </a>
         </div>
       </div>
