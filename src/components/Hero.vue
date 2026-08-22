@@ -34,18 +34,6 @@ onMounted(() => {
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <!-- Editorial Typography Hero -->
       <div class="max-w-4xl space-y-8">
-        <!-- Subtle Context Line -->
-        <div
-          data-hero-reveal
-          class="flex items-center gap-3 text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest"
-        >
-          <span>{{ classConfig.schoolName }}</span>
-          <span>/</span>
-          <span class="text-primary-700 dark:text-primary-300 font-bold"
-            >Angkatan 2024–2027</span
-          >
-        </div>
-
         <!-- Headline -->
         <h1
           data-hero-reveal
@@ -60,7 +48,7 @@ onMounted(() => {
           data-hero-reveal
           class="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed max-w-2xl"
         >
-          {{ classConfig.tagline }} Tempat 36 siswa menempa logika pemrograman,
+          {{ classConfig.tagline }} Tempat 34 siswa menempa logika pemrograman,
           membangun arsitektur web & mobile, serta merancang mekanika gim
           interaktif.
         </p>
