@@ -1,14 +1,33 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue';
 import { achievementsData } from '../data/classData';
 import { Trophy } from 'lucide-vue-next';
+import { useScrollReveal } from '../composables/useReveal';
+
+const sectionRef = ref<HTMLElement | null>(null);
+let io: IntersectionObserver | null = null;
+
+onMounted(() => {
+  if (sectionRef.value) {
+    io = useScrollReveal(sectionRef.value, {
+      selector: '[data-reveal]',
+      duration: 400,
+      staggerMs: 80,
+    });
+  }
+});
+
+onUnmounted(() => {
+  io?.disconnect();
+});
 </script>
 
 <template>
-  <section id="prestasi" class="py-20 lg:py-28 bg-neutral-50 dark:bg-neutral-800/40 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50">
+  <section id="prestasi" ref="sectionRef" class="py-20 lg:py-28 bg-neutral-50 dark:bg-neutral-800/40 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50">
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
       
       <!-- Section Header -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
+      <div data-reveal class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
         <div class="lg:col-span-5 space-y-3">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100">
             Prestasi Kelas
@@ -32,6 +51,7 @@ import { Trophy } from 'lucide-vue-next';
           <div
             v-for="ach in achievementsData"
             :key="ach.id"
+            data-reveal
             class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 border-b border-neutral-100 dark:border-neutral-700/60 pb-6 last:border-0 last:pb-0"
           >
             <div class="space-y-1">

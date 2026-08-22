@@ -70,7 +70,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "dbms",
     title: "Basis Data",
-    iconName: "Gamepad2",
+    iconName: "Data",
     description:
       "Mengintegrasikan aplikasi dengan data base, serta pemahaman CRUD yang mendalam.",
     techs: ["XAMPP", "MySQL", "MariaDB"],

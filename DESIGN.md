@@ -152,11 +152,49 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
 
 ## 6. Interaksi & Motion
 
-- Durasi singkat (150–300 ms), easing default; hanya transisi warna/opasitas/translate kecil.
-- Elemen ber-interaksi: link nav (warna), hover baris tabel
-  (latar `neutral-50`), tombol (warna), toggle tema (icon berubah).
-- `prefers-reduced-motion`: smooth-scroll dimatikan otomatis (`style.css`).
-- Dilarang menambah animasi dekoratif (parallax, reveal-on-scroll, marquee, dsb.).
+### Sistem: anime.js v4
+
+Motion site-wide menggunakan **anime.js v4** (`npm install animejs`). API yang dipakai:
+`import { animate, stagger } from "animejs"`. Helper reveal-on-scroll ada di
+`src/composables/useReveal.ts`.
+
+### Aturan Motion
+
+| Prinsip | Detail |
+| :--- | :--- |
+| **Motion menjelaskan state** | Entrance reveals konten saat masuk viewport; tab switch re-stagger roster. Tidak ada animasi dekoratif. |
+| **Durasi pendek** | Entrance: 300–500 ms. Stagger offset: 25–60 ms. Tab re-reveal: 25 ms/card, cap ~400 ms total. |
+| **Properti yang dianimasikan** | `opacity` (0→1) + `translateY` (12–20px → 0) SAJA. Tidak ada scale, bounce, spring, parallax, atau loop. |
+| **Easing** | `outCubic` untuk semua entrance. Tidak ada easing eksotis. |
+| **`prefers-reduced-motion`** | Jika `reduce`, SEMUA JS animation di-skip — elemen render final state langsung. Smooth-scroll CSS tetap dimatikan (`style.css`). Elemen tidak pernah tersembunyi permanen jika JS atau IO gagal. |
+| **Hover/focus/menu** | Tetap CSS transition — anime.js TIDAK menangani micro-interaction. |
+| **Navbar** | Statis — tidak ada entrance animation. |
+
+### Timing Map
+
+| Section | Trigger | Targets | Duration | Stagger | Catatan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Hero** | On mount (once) | `[data-hero-reveal]` blocks (5) | 500 ms | 60 ms | Context → Headline → Subtitle → CTA → Metrics. Stats count-up 800 ms setelah entrance selesai. |
+| **Tentang** | Scroll IO | `[data-reveal]` (heading + 2 content blocks) | 400 ms | 60 ms | IO rootMargin `-10%`. Unobserve setelah trigger. |
+| **Struktur** | Scroll IO (initial) + tab switch | `[data-reveal]` (section header + wali kelas) + `[data-tab-reveal]` (roster tiles) | 400 ms (IO) / 300 ms (tab) | 30 ms (IO) / 25 ms (tab) | Tab switch re-stagger wali kelas + seluruh roster via `reRevealGrid()`. |
+| **Prestasi** | Scroll IO | `[data-reveal]` (header + achievement rows) | 400 ms | 80 ms | IO rootMargin `-10%`. |
+| **Kegiatan** | Scroll IO | `[data-reveal]` (header + IG tiles/activity rows) | 400 ms | 60 ms | IG grid tiles staggered. Fallback timeline juga staggered. |
+
+### Progressive Enhancement & Reduced-Motion
+
+1. Elemen terlihat normal tanpa JS (tidak ada `opacity: 0` di template/CSS).
+2. `onMounted`: jika JS aktif DAN `prefersReducedMotion === false`, elemen di-hide
+   synchronously via `hideNow()`, lalu di-reveal oleh anime.js (langsung atau via IO).
+3. Jika `prefersReducedMotion === true`: `hideNow()` dan `revealNow()` no-op —
+   elemen tetap terlihat penuh dari awal.
+4. Jika IO gagal: elemen tetap tersembunyi (acceptible — kasus edge: browser sangat tua).
+   Komponen melakukan `io?.disconnect()` di `onUnmounted`.
+
+### Stat Count-Up
+
+Angka di hero metrics (34, 14+, 5, 100%) dianimasikan dari 0 menggunakan helper
+`countUp()` (requestAnimationFrame, outCubic). Suffix (+, %) dipertahankan.
+Jika value bukan angka murni, dibiarkan statis.
 
 ## 7. Aksesibilitas (batas minimum)
 

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import { gradeStructures } from "../data/classData";
 import type { GradeStructure } from "../data/types";
 import { IconInstagram } from "./icons/social";
+import { useScrollReveal, reRevealGrid } from "../composables/useReveal";
 
 const grades = [12, 11, 10] as const;
 const activeGrade = ref<10 | 11 | 12>(12);
@@ -10,6 +11,10 @@ const activeGrade = ref<10 | 11 | 12>(12);
 const activeStructure = computed<GradeStructure | undefined>(() =>
   gradeStructures.find((g) => g.grade === activeGrade.value),
 );
+
+const sectionRef = ref<HTMLElement | null>(null);
+const rosterRef = ref<HTMLElement | null>(null);
+let io: IntersectionObserver | null = null;
 
 function initials(name: string): string {
   return name
@@ -23,11 +28,36 @@ function initials(name: string): string {
 function gradeLabel(g: number): string {
   return `Kelas ${g}`;
 }
+
+// Re-reveal cards on tab switch
+watch(activeGrade, () => {
+  // Next tick: DOM has updated with new grade's roster
+  setTimeout(() => {
+    if (rosterRef.value) {
+      reRevealGrid(rosterRef.value);
+    }
+  }, 10);
+});
+
+onMounted(() => {
+  if (sectionRef.value) {
+    io = useScrollReveal(sectionRef.value, {
+      selector: '[data-reveal]',
+      duration: 400,
+      staggerMs: 30,
+    });
+  }
+});
+
+onUnmounted(() => {
+  io?.disconnect();
+});
 </script>
 
 <template>
   <section
     id="struktur"
+    ref="sectionRef"
     class="py-20 lg:py-28 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50"
   >
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
@@ -82,11 +112,11 @@ function gradeLabel(g: number): string {
         class="space-y-16"
       >
         <!-- Wali Kelas Cards (Both Semesters Side by Side) -->
-        <div>
+        <div data-reveal>
           <h3
             class="text-lg font-bold text-neutral-900 dark:text-neutral-100 font-mono border-b border-neutral-200 dark:border-neutral-700/60 pb-2 mb-6"
           >
-            Wali Kelas — Kelas {{ activeStructure.grade }}
+            Wali Kelas
           </h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div
@@ -121,30 +151,28 @@ function gradeLabel(g: number): string {
           </div>
         </div>
 
-        <!-- Roster Grid: Officers (first 2 tiles) + Students (34 tiles) -->
-        <div>
+        <!-- Roster Grid: Officers + Students -->
+        <div ref="rosterRef">
           <h3
             class="text-lg font-bold text-neutral-900 dark:text-neutral-100 font-mono border-b border-neutral-200 dark:border-neutral-700/60 pb-2 mb-6"
           >
-            Daftar Siswa — Kelas {{ activeStructure.grade }}
+            Daftar Murid
           </h3>
 
-          <!-- Officer Pair: centered — middle columns on md+, full row on mobile -->
+          <!-- Officer Pair -->
           <div class="mb-4 grid grid-cols-2 gap-4 md:grid-cols-4">
-            <!-- Officer Cards (visually distinguished) -->
             <div
               v-for="(officer, i) in activeStructure.officers"
               :key="officer.name"
+              data-tab-reveal
               :class="i === 0 ? 'md:col-start-2' : ''"
               class="bg-neutral-50 dark:bg-neutral-800 border border-primary-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-600/50"
             >
-              <!-- Role Label -->
               <span
                 class="text-[10px] font-mono font-bold text-primary-700 dark:text-primary-300 uppercase tracking-widest"
               >
                 {{ officer.role }}
               </span>
-              <!-- Avatar -->
               <div
                 class="w-14 h-14 rounded-full overflow-hidden bg-primary-700 dark:bg-primary-600 flex items-center justify-center text-white font-bold text-base shrink-0"
               >
@@ -157,14 +185,12 @@ function gradeLabel(g: number): string {
                 />
                 <template v-else>{{ initials(officer.name) }}</template>
               </div>
-              <!-- Name -->
               <span
                 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 leading-tight truncate w-full"
                 :title="officer.name"
               >
                 {{ officer.name }}
               </span>
-              <!-- IG Link or empty space -->
               <div class="h-5">
                 <a
                   v-if="officer.igUsername"
@@ -181,14 +207,14 @@ function gradeLabel(g: number): string {
             </div>
           </div>
 
-          <!-- Student Cards: 32 siswa = baris penuh @4 kolom -->
+          <!-- Student Cards -->
           <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div
               v-for="student in activeStructure.students"
               :key="student.name"
+              data-tab-reveal
               class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700/60 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-neutral-300 dark:hover:border-neutral-500"
             >
-              <!-- Avatar -->
               <div
                 class="w-14 h-14 rounded-full overflow-hidden bg-neutral-700 dark:bg-neutral-600 flex items-center justify-center text-white font-bold text-base shrink-0"
               >
@@ -201,14 +227,12 @@ function gradeLabel(g: number): string {
                 />
                 <template v-else>{{ initials(student.name) }}</template>
               </div>
-              <!-- Name -->
               <span
                 class="text-sm font-semibold text-neutral-900 dark:text-neutral-100 leading-tight truncate w-full"
                 :title="student.name"
               >
                 {{ student.name }}
               </span>
-              <!-- IG Link or empty space -->
               <div class="h-5">
                 <a
                   v-if="student.igUsername"

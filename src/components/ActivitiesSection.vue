@@ -1,13 +1,31 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import type { InstagramFeed } from "../data/types";
 import { activitiesData, classConfig } from "../data/classData";
 import { ArrowUpRight, Play, Copy } from "lucide-vue-next";
 import feedData from "../data/instagram.json";
+import { useScrollReveal } from "../composables/useReveal";
 
 const feed = feedData as InstagramFeed;
 const posts = computed(() => feed.posts);
 const hasPosts = computed(() => posts.value.length > 0);
+
+const sectionRef = ref<HTMLElement | null>(null);
+let io: IntersectionObserver | null = null;
+
+onMounted(() => {
+  if (sectionRef.value) {
+    io = useScrollReveal(sectionRef.value, {
+      selector: '[data-reveal]',
+      duration: 400,
+      staggerMs: 60,
+    });
+  }
+});
+
+onUnmounted(() => {
+  io?.disconnect();
+});
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
@@ -37,11 +55,12 @@ const igHandle = computed(() => {
 <template>
   <section
     id="kegiatan"
+    ref="sectionRef"
     class="py-20 lg:py-28 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50"
   >
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <!-- Section Header -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
+      <div data-reveal class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
         <div class="lg:col-span-5 space-y-3">
           <h2
             class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100"
@@ -71,6 +90,7 @@ const igHandle = computed(() => {
         <a
           v-for="post in posts"
           :key="post.id"
+          data-reveal
           :href="post.permalink"
           target="_blank"
           rel="noopener noreferrer"
@@ -88,7 +108,7 @@ const igHandle = computed(() => {
               loading="lazy"
             />
 
-            <!-- Media type indicator (top-left) -->
+            <!-- Media type indicator -->
             <div
               v-if="mediaIcon(post.mediaType)"
               class="absolute top-2 left-2 w-6 h-6 rounded bg-black/40 flex items-center justify-center"
@@ -99,7 +119,7 @@ const igHandle = computed(() => {
               />
             </div>
 
-            <!-- Arrow cue (top-right, appears on hover) -->
+            <!-- Arrow cue -->
             <div
               class="absolute top-2 right-2 w-6 h-6 rounded bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             >
@@ -124,11 +144,12 @@ const igHandle = computed(() => {
         </a>
       </div>
 
-      <!-- Fallback: Editorial Timeline (when no IG posts) -->
+      <!-- Fallback: Editorial Timeline -->
       <div v-else class="space-y-1">
         <div
           v-for="act in activitiesData"
           :key="act.id"
+          data-reveal
           class="group flex flex-col md:flex-row gap-6 md:gap-12 py-10 border-t border-neutral-200 dark:border-neutral-700/60 first:border-0"
         >
           <!-- Date Column -->

@@ -1,16 +1,39 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from "vue";
 import { classConfig, focusAreas } from "../data/classData";
 import { BookOpen, MapPin } from "lucide-vue-next";
+import { useScrollReveal } from "../composables/useReveal";
+
+const sectionRef = ref<HTMLElement | null>(null);
+let io: IntersectionObserver | null = null;
+
+onMounted(() => {
+  if (sectionRef.value) {
+    io = useScrollReveal(sectionRef.value, {
+      selector: '[data-reveal]',
+      duration: 400,
+      staggerMs: 60,
+    });
+  }
+});
+
+onUnmounted(() => {
+  io?.disconnect();
+});
 </script>
 
 <template>
   <section
     id="tentang"
+    ref="sectionRef"
     class="py-20 lg:py-28 bg-neutral-50 dark:bg-neutral-800/40 text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700/50"
   >
     <div class="max-w-6xl mx-auto px-6 sm:px-8">
       <!-- Editorial Section Heading -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16">
+      <div
+        data-reveal
+        class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-16"
+      >
         <div class="lg:col-span-5 space-y-3">
           <h2
             class="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100"
@@ -30,10 +53,13 @@ import { BookOpen, MapPin } from "lucide-vue-next";
         </div>
       </div>
 
-      <!-- Editorial Information Grid (No uniform card rows) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
+      <!-- Editorial Information Grid -->
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16"
+      >
         <!-- School Identity Block -->
         <div
+          data-reveal
           class="lg:col-span-6 bg-white dark:bg-neutral-800 p-8 rounded-lg border border-neutral-300 dark:border-neutral-700/60 flex flex-col justify-between space-y-6"
         >
           <div class="space-y-4">
@@ -78,8 +104,9 @@ import { BookOpen, MapPin } from "lucide-vue-next";
           </div>
         </div>
 
-        <!-- Specialization Tracks (Clean Editorial Rows) -->
+        <!-- Specialization Tracks -->
         <div
+          data-reveal
           class="lg:col-span-6 bg-white dark:bg-neutral-800 p-8 rounded-lg border border-neutral-300 dark:border-neutral-700/60 flex flex-col justify-between space-y-6"
         >
           <div class="space-y-4">

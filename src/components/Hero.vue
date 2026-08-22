@@ -1,6 +1,30 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { classConfig, statsData } from "../data/classData";
 import { ArrowRight } from "lucide-vue-next";
+import { useHeroEntrance, countUp, prefersReducedMotion } from "../composables/useReveal";
+
+useHeroEntrance();
+
+const statRefs = ref<HTMLElement[]>([]);
+
+onMounted(() => {
+  if (prefersReducedMotion.value) return;
+
+  // Count-up for stat numbers after hero entrance completes
+  const baseDelay = 60 * 5 + 500; // 5 stagger slots × 60ms + 500ms duration
+  setTimeout(() => {
+    statRefs.value.forEach((el, i) => {
+      const raw = statsData[i].value;
+      const numMatch = raw.match(/^(\d+)/);
+      if (numMatch) {
+        const target = parseInt(numMatch[1], 10);
+        const suffix = raw.slice(numMatch[1].length);
+        countUp(el, target, suffix, 800);
+      }
+    });
+  }, baseDelay);
+});
 </script>
 
 <template>
@@ -12,6 +36,7 @@ import { ArrowRight } from "lucide-vue-next";
       <div class="max-w-4xl space-y-8">
         <!-- Subtle Context Line -->
         <div
+          data-hero-reveal
           class="flex items-center gap-3 text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest"
         >
           <span>{{ classConfig.schoolName }}</span>
@@ -23,6 +48,7 @@ import { ArrowRight } from "lucide-vue-next";
 
         <!-- Headline -->
         <h1
+          data-hero-reveal
           class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100 leading-[1.08]"
         >
           Pengembangan Perangkat Lunak & Gim
@@ -31,6 +57,7 @@ import { ArrowRight } from "lucide-vue-next";
 
         <!-- Subtitle -->
         <p
+          data-hero-reveal
           class="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 font-normal leading-relaxed max-w-2xl"
         >
           {{ classConfig.tagline }} Tempat 36 siswa menempa logika pemrograman,
@@ -39,7 +66,7 @@ import { ArrowRight } from "lucide-vue-next";
         </p>
 
         <!-- CTA Action Row -->
-        <div class="flex flex-wrap items-center gap-4 pt-2">
+        <div data-hero-reveal class="flex flex-wrap items-center gap-4 pt-2">
           <a
             href="#tentang"
             class="inline-flex items-center gap-2 px-6 py-3.5 rounded text-sm font-medium text-white bg-primary-700 hover:bg-primary-900 dark:bg-primary-600 dark:hover:bg-primary-500 transition-colors shadow-sm"
@@ -57,12 +84,14 @@ import { ArrowRight } from "lucide-vue-next";
         </div>
       </div>
 
-      <!-- Clean Metrics Ledger (Replacing floating cards) -->
+      <!-- Clean Metrics Ledger -->
       <div
+        data-hero-reveal
         class="mt-20 pt-10 border-t border-neutral-200 dark:border-neutral-700/50 grid grid-cols-2 md:grid-cols-4 gap-8"
       >
         <div v-for="(stat, idx) in statsData" :key="idx" class="space-y-1">
           <div
+            :ref="(el) => { if (el) statRefs[idx] = el as HTMLElement }"
             class="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-neutral-100 font-mono tracking-tight"
           >
             {{ stat.value }}

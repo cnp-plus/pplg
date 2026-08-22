@@ -8,6 +8,7 @@ Website statis satu halaman untuk kelas **PPLG 1** (Pengembangan Perangkat Lunak
 - [TypeScript](https://www.typescriptlang.org/) — type check ketat via `vue-tsc`
 - [Vite](https://vite.dev/) — dev server & build produksi
 - [Tailwind CSS v4](https://tailwindcss.com/) — via plugin `@tailwindcss/vite`, token warna didefinisikan di `src/style.css` (`@theme`)
+- [anime.js v4](https://animejs.com/) — motion system: entrance reveal-on-scroll, staggered grid, stat count-up
 - [lucide-vue-next](https://lucide.dev/) — ikon
 
 ## Menjalankan Proyek
@@ -36,7 +37,7 @@ npm run preview # pratinjau hasil build produksi
 │   │   ├── ShowcaseSection.vue # Karya siswa (baris asimetris) + prestasi (ledger)
 │   │   ├── ActivitiesSection.vue # Timeline dokumentasi kegiatan
 │   │   └── FooterSection.vue   # Kontak, sosmed, form pesan (mailto)
-│   ├── composables/            # Composable (useTheme untuk toggle tema)
+│   ├── composables/            # Composable (useTheme untuk toggle tema, useReveal untuk motion)
 │   ├── data/
 │   │   ├── types.ts            # Interface TypeScript semua data
 │   │   └── classData.ts        # ⭐ SEMUA KONTEN KELAS ADA DI SINI
