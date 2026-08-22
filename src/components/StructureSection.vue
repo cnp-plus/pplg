@@ -101,11 +101,13 @@ function gradeLabel(g: number): string {
             Daftar Siswa — Kelas {{ activeStructure.grade }}
           </h3>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Officer Pair: centered — middle columns on md+, full row on mobile -->
+          <div class="mb-4 grid grid-cols-2 gap-4 md:grid-cols-4">
             <!-- Officer Cards (visually distinguished) -->
             <div
-              v-for="officer in activeStructure.officers"
+              v-for="(officer, i) in activeStructure.officers"
               :key="officer.name"
+              :class="i === 0 ? 'md:col-start-2' : ''"
               class="bg-neutral-50 dark:bg-neutral-800 border border-primary-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-600/50"
             >
               <!-- Role Label -->
@@ -136,8 +138,10 @@ function gradeLabel(g: number): string {
                 </a>
               </div>
             </div>
+          </div>
 
-            <!-- Student Cards -->
+          <!-- Student Cards: 32 siswa = baris penuh @4 kolom -->
+          <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div
               v-for="student in activeStructure.students"
               :key="student.name"

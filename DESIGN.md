@@ -175,6 +175,8 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
 - **`gradeStructures`** berisi data placeholder fiktif untuk tiga angkatan. Setiap entry
   mencakup wali kelas per semester (dengan mata pelajaran), dua pengurus (ketua & wakil),
   dan daftar siswa (32 per angkatan; total roster 34 termasuk ketua & wakil).
+  Pasangan ketua & wakil menempati baris pertama di tengah (kolom tengah pada ≥md),
+  sisanya baris penuh @4 kolom.
   Data ini diedit manual — bukan hasil pipeline.
 - **`src/data/instagram.json` dan `public/ig/*` dihasilkan oleh skrip** (`npm run fetch:instagram`).
   Jangan mengedit file ini secara manual — placeholder SVG di `public/ig/` akan diganti
