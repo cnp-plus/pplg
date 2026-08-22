@@ -10,13 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet" />
     <title>PPLG 1 — Pengembangan Perangkat Lunak dan Gim</title>
     <script>
+      // Tema otomatis mengikuti preferensi sistem (tanpa kontrol pengguna).
       (function () {
-        var KEY = 'pplg-theme';
-        try {
-          var mode = localStorage.getItem(KEY);
-          var dark = mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          if (dark) document.documentElement.classList.add('dark');
-        } catch (e) {}
+        var mq = window.matchMedia("(prefers-color-scheme: dark)");
+        var apply = function () {
+          document.documentElement.classList.toggle("dark", mq.matches);
+        };
+        apply();
+        if (mq.addEventListener) mq.addEventListener("change", apply);
       })();
     </script>
   </head>

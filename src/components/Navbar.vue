@@ -2,9 +2,6 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { classConfig, navItems } from '../data/classData';
 import { Menu, X } from 'lucide-vue-next';
-import { useTheme } from '../composables/useTheme';
-
-const { cycle, currentIcon: ThemeIcon, currentLabel, currentAriaLabel } = useTheme();
 
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
@@ -91,32 +88,10 @@ onUnmounted(() => {
         >
           {{ item.label }}
         </a>
-
-        <!-- Theme Toggle (Desktop) -->
-        <button
-          type="button"
-          @click="cycle"
-          class="ml-2 p-2 rounded text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-700"
-          :aria-label="currentAriaLabel"
-          :title="currentLabel"
-        >
-          <ThemeIcon class="w-4 h-4" />
-        </button>
       </nav>
 
       <!-- Mobile Controls -->
       <div class="flex items-center gap-2 md:hidden">
-        <!-- Theme Toggle (Mobile) -->
-        <button
-          type="button"
-          @click="cycle"
-          class="p-2 rounded text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-700"
-          :aria-label="currentAriaLabel"
-          :title="currentLabel"
-        >
-          <ThemeIcon class="w-5 h-5" />
-        </button>
-
         <button
           type="button"
           @click="toggleMenu"

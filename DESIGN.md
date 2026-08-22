@@ -20,7 +20,7 @@ berangkat dari subjek: **kelas SMK jurusan rekayasa perangkat lunak & gim**.
    pada elemen yang benar-benar interaktif. Tidak ada animasi dekoratif scroll.
 5. **Jujur secara fungsional** — situs statis tanpa backend: form kontak membuka aplikasi
    email (`mailto:`), tidak memalsukan "terkirim".
-6. **Mode gelap yang koheren** — tema tri-state (terang/gelap/sistem) dengan palet yang
+6. **Mode gelap yang koheren** — tema otomatis mengikuti sistem dengan palet yang
    menggunakan token yang sama, dipetakan ulang untuk kontras AA di latar gelap.
 
 ## 2. Keputusan Anti-Slop (apa yang dihapus & mengapa)
@@ -34,7 +34,7 @@ berangkat dari subjek: **kelas SMK jurusan rekayasa perangkat lunak & gim**.
 | Pill badge di hampir setiap data point | Maksimal satu indikator status kecil per item | Badge berlebihan meniadakan hierarki |
 | Penomoran dekoratif (`// 01.`, eyebrow bernomor per section) | Dihapus total; heading section = `h2` murni | Nomor hanya boleh menyandikan urutan yang benar-benar ada — urutan scroll halaman bukan informasi yang perlu dilabeli |
 | Tag palsu di statistik (`#total_capacity`) | Statistik polos: angka besar mono + label + sublabel | Noise teknis palsu |
-| Navbar gelap + badge versi `v2026.1` + ornamen `</>` | Navbar putih sticky, brand monogram `P1`, toggle tema | Chrome harus tenang agar konten menonjol |
+| Navbar gelap + badge versi `v2026.1` + ornamen `</>` | Navbar putih sticky, brand monogram `P1` | Chrome harus tenang agar konten menonjol |
 | Selang-seling section gelap/terang tanpa logika | Halaman terang konsisten (`white` ↔ `neutral-50`), footer gelap sebagai penutup | Kontras gelap-terang acak = dekorasi, bukan informasi |
 | Panah hover pada baris non-link | Dihapus | Afilordansi palsu menyesatkan pengguna |
 
@@ -119,36 +119,24 @@ satu paragraf di kolom kanan). Penomoran dekoratif dianggap pola slop dan tidak 
 6. **Footer** — satu-satunya permukaan gelap (`neutral-900`): branding `P1`, kontak,
    sosmed, form pesan (mailto), copyright. Di mode gelap dipisahkan dari page dengan border-top.
 
-## 5. Tema: Terang / Gelap / Sistem
+## 5. Tema: Otomatis Mengikuti Sistem
 
 ### Perilaku
 
-- **Tiga mode**: `system` (default), `light`, `dark`. Toggle cycling di navbar.
-- **Penyimpanan**: preferensi disimpan di `localStorage` dengan key `pplg-theme`.
-- **FOUC prevention**: skrip inline di `<head>` (`index.html`) membaca localStorage dan
-  menerapkan kelas `.dark` pada `<html>` sebelum paint pertama.
-- **System follow**: Saat mode = `system`, komponen mendengarkan perubahan
-  `prefers-color-scheme` via `matchMedia('prefers-color-scheme: dark')` dan mengikuti secara
-  real-time tanpa perlu refresh.
+- **Tanpa kontrol pengguna** — tidak ada toggle di UI. Tema sepenuhnya mengikuti
+  preferensi sistem pengunjung via `prefers-color-scheme`.
+- **FOUC prevention**: skrip inline di `<head>` (`index.html`) menerapkan kelas `.dark`
+  pada `<html>` sebelum paint pertama, dan memasang listener `matchMedia` agar perubahan
+  preferensi OS mengikuti secara real-time tanpa reload.
 - **Tailwind v4**: Dark mode dikonfigurasi via `@custom-variant dark (&:where(.dark, .dark *));`
   di `src/style.css`. Semua komponen menggunakan prefix `dark:` untuk override.
 
-### Toggle UI
+### Konsekuensi desain
 
-- **Desktop**: Tombol icon kecil (Sun / Moon / Monitor dari `lucide-vue-next`) di samping
-  nav items. `aria-label` mendeskripsikan aksi berikutnya (mis. "Mode terang aktif. Klik untuk
-  beralih ke mode gelap").
-- **Mobile**: Tombol icon yang sama di sebelah tombol hamburger.
-- **Accessibility**: `aria-label`, `title`, `focus:ring-2 focus:ring-primary-700`,
-  keyboard accessible (Enter/Space untuk toggle).
-
-### Ikony
-
-| Mode | Ikon | Label | Aksi Klik Berikutnya |
-| :--- | :--- | :--- | :--- |
-| System | `Monitor` | "Ikut sistem" | → Light |
-| Light | `Sun` | "Mode terang" | → Dark |
-| Dark | `Moon` | "Mode gelap" | → System |
+- Kedua mode harus selalu sama kuat: setiap permukaan, teks, border, dan aset wajib punya
+  pasangan `dark:` yang teruji — tidak ada asumsi "default terang".
+- Tidak ada state tema di `localStorage`; satu-satunya sumber kebenaran adalah OS.
+- Uji wajib sebelum commit: lihat situs dalam kedua mode (aturan §8).
 
 ## 6. Interaksi & Motion
 
