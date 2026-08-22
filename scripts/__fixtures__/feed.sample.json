@@ -1,0 +1,34 @@
+[
+  {
+    "id": "camelPost",
+    "permalink": "https://www.instagram.com/p/CAM_EL_POST1/",
+    "caption": "Final project showcase prep — full-stack team shipping tonight! ✨ #PPLG1",
+    "timestamp": "2025-09-20T14:30:00+00:00",
+    "mediaType": "IMAGE",
+    "mediaUrl": "scripts/__fixtures__/pixel.jpg"
+  },
+  {
+    "id": "snakePost",
+    "permalink": "https://www.instagram.com/p/SNAKE_POST_2/",
+    "caption": "Mobile dev division demoing QRIS cantin flow at the lab. #PPLG1",
+    "timestamp": "2025-09-18T09:15:00+00:00",
+    "media_type": "IMAGE",
+    "media_url": "./pixel.png"
+  },
+  {
+    "id": "videoPost",
+    "permalink": "https://www.instagram.com/p/VIDEO_POST_3/",
+    "caption": "Behind the scenes reel from the school tech expo setup.",
+    "timestamp": "2025-09-15T18:42:00+00:00",
+    "media_type": "VIDEO",
+    "media_url": null,
+    "thumbnail_url": "./pixel.png"
+  },
+  {
+    "id": "badPost",
+    "permalink": "",
+    "caption": "This entry is missing an image AND a real permalink, so it must be filtered out.",
+    "timestamp": "2025-09-01T00:00:00+00:00",
+    "media_type": "IMAGE"
+  }
+]

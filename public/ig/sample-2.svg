@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <rect x="24" y="24" width="352" height="352" rx="8" stroke="#D1D5DB" stroke-width="1" fill="none"/>
+  <!-- Grid lines -->
+  <g stroke="#E5E7EB" stroke-width="0.5">
+    <line x1="80" y1="24" x2="80" y2="376"/><line x1="140" y1="24" x2="140" y2="376"/>
+    <line x1="200" y1="24" x2="200" y2="376"/><line x1="260" y1="24" x2="260" y2="376"/>
+    <line x1="320" y1="24" x2="320" y2="376"/>
+    <line x1="24" y1="80" x2="376" y2="80"/><line x1="24" y1="140" x2="376" y2="140"/>
+    <line x1="24" y1="200" x2="376" y2="200"/><line x1="24" y1="260" x2="376" y2="260"/>
+    <line x1="24" y1="320" x2="376" y2="320"/>
+  </g>
+  <!-- Node dots at intersections -->
+  <g fill="#2563EB" opacity="0.3">
+    <circle cx="140" cy="140" r="5"/><circle cx="200" cy="200" r="7"/>
+    <circle cx="260" cy="140" r="5"/><circle cx="200" cy="260" r="5"/>
+    <circle cx="140" cy="200" r="4"/><circle cx="260" cy="200" r="4"/>
+    <circle cx="200" cy="140" r="4"/><circle cx="200" cy="260" r="4"/>
+  </g>
+  <!-- Connecting lines between nodes -->
+  <g stroke="#93C5FD" stroke-width="1.5" opacity="0.5">
+    <line x1="140" y1="140" x2="200" y2="200"/><line x1="260" y1="140" x2="200" y2="200"/>
+    <line x1="140" y1="200" x2="200" y2="200"/><line x1="260" y1="200" x2="200" y2="200"/>
+    <line x1="200" y1="140" x2="200" y2="200"/><line x1="200" y1="260" x2="200" y2="200"/>
+  </g>
+  <!-- Label -->
+  <text x="200" y="310" text-anchor="middle" font-family="monospace" font-size="11" fill="#6B7280" opacity="0.6" letter-spacing="3">KUNJUNGAN</text>
+</svg>

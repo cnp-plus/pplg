@@ -1,0 +1,50 @@
+name: Refresh Instagram Feed
+
+# Regenerates the statically-committed Instagram feed (src/data/instagram.json
+# + downloaded images in public/ig/) so the Kegiatan section stays current
+# without relying on expiring Instagram CDN URLs at request time.
+
+on:
+  schedule:
+    # Daily at 02:00 UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch: # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout with the default GITHUB_TOKEN (contents: write) so we can push later.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Refresh Instagram feed
+        run: node scripts/fetch-instagram.mjs --keep-going
+        env:
+          INSTAGRAM_FEED_URL: ${{ secrets.INSTAGRAM_FEED_URL }}
+
+      # Capture whether the feed files changed before deciding to commit.
+      - name: Check for changes
+        id: changes
+        run: |
+          CHANGES=$(git status --porcelain src/data/instagram.json public/ig)
+          echo "porcelain<<PORCELAIN_END" >> "$GITHUB_OUTPUT"
+          echo "$CHANGES" >> "$GITHUB_OUTPUT"
+          echo "PORCELAIN_END" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push refreshed feed
+        if: steps.changes.outputs.porcelain != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41891723+github-actions[bot]@users.noreply.github.com"
+          git add src/data/instagram.json public/ig
+          git commit -m "chore: refresh instagram feed"
+          git push
