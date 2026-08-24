@@ -126,7 +126,7 @@ onUnmounted(() => {
             >
               <!-- Avatar -->
               <div
-                class="w-16 h-16 rounded-full overflow-hidden bg-primary-700 dark:bg-primary-600 flex items-center justify-center text-white font-bold text-lg shrink-0"
+                class="w-16 h-16 rounded-full overflow-hidden bg-primary-700 flex items-center justify-center text-white font-bold text-lg shrink-0"
               >
                 <img
                   v-if="wk.avatarUrl"
@@ -166,7 +166,7 @@ onUnmounted(() => {
               :key="officer.name"
               data-tab-reveal
               :class="i === 0 ? 'md:col-start-2' : ''"
-              class="bg-neutral-50 dark:bg-neutral-800 border border-primary-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-600/50"
+              class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-300/60"
             >
               <span
                 class="text-[10px] font-mono font-bold text-primary-700 dark:text-primary-300 uppercase tracking-widest"
@@ -174,7 +174,7 @@ onUnmounted(() => {
                 {{ officer.role }}
               </span>
               <div
-                class="w-14 h-14 rounded-full overflow-hidden bg-primary-700 dark:bg-primary-600 flex items-center justify-center text-white font-bold text-base shrink-0"
+                class="w-14 h-14 rounded-full overflow-hidden bg-primary-700 flex items-center justify-center text-white font-bold text-base shrink-0"
               >
                 <img
                   v-if="officer.avatarUrl"

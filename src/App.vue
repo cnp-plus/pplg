@@ -10,7 +10,7 @@ import FooterSection from "./components/FooterSection.vue";
 
 <template>
   <div
-    class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-sans antialiased selection:bg-primary-100 dark:selection:bg-primary-800 selection:text-primary-900 dark:selection:text-primary-100"
+    class="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-sans antialiased selection:bg-primary-100 dark:selection:bg-primary-900 selection:text-primary-900 dark:selection:text-primary-100"
   >
     <!-- Clean, Sticky Navigation -->
     <Navbar />

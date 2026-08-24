@@ -22,46 +22,10 @@ if (typeof window !== 'undefined') {
 /* ------------------------------------------------------------------ */
 
 /** Set initial hidden state (opacity 0 + translateY). Safe: call in onMounted. */
-export function hideNow(el: HTMLElement, ty = 16): void {
+function hideNow(el: HTMLElement, ty = 16): void {
   if (!el) return;
   el.style.opacity = '0';
   el.style.transform = `translateY(${ty}px)`;
-}
-
-/** Animate a single element to visible state via anime.js. */
-export function revealNow(
-  el: HTMLElement,
-  opts?: { duration?: number; delay?: number; translateY?: number },
-): void {
-  if (!el || prefersReducedMotion.value) return;
-  const { duration = 400, delay = 0, translateY = 16 } = opts ?? {};
-  animate(el, {
-    opacity: [0, 1],
-    translateY: [translateY, 0],
-    duration,
-    delay,
-    ease: 'outCubic',
-  });
-}
-
-/**
- * Stagger-reveal a list of elements.
- * Hides all first, then animates with per-element stagger delay.
- */
-export function revealStaggeredNow(
-  els: HTMLElement[],
-  opts?: { duration?: number; staggerMs?: number; translateY?: number },
-): void {
-  if (!els.length || prefersReducedMotion.value) return;
-  const { duration = 400, staggerMs = 40, translateY = 16 } = opts ?? {};
-  els.forEach((el) => hideNow(el, translateY));
-  animate(els, {
-    opacity: [0, 1],
-    translateY: [translateY, 0],
-    duration,
-    delay: stagger(staggerMs),
-    ease: 'outCubic',
-  });
 }
 
 /* ------------------------------------------------------------------ */
@@ -216,19 +180,3 @@ export function reRevealGrid(container: HTMLElement): void {
   });
 }
 
-/* ------------------------------------------------------------------ */
-/*  Public composable wrapper                                         */
-/* ------------------------------------------------------------------ */
-
-export function useReveal() {
-  return {
-    prefersReducedMotion,
-    hideNow,
-    revealNow,
-    revealStaggeredNow,
-    useScrollReveal,
-    useHeroEntrance,
-    countUp,
-    reRevealGrid,
-  };
-}

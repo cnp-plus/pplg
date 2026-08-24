@@ -81,7 +81,7 @@ onUnmounted(() => {
               </p>
             </div>
             <blockquote
-              class="text-neutral-700 dark:text-neutral-300 italic border-l-2 border-primary-700 dark:border-primary-400 pl-4 py-1 text-sm sm:text-base"
+              class="text-neutral-700 dark:text-neutral-300 italic border-l-2 border-primary-700 dark:border-primary-300 pl-4 py-1 text-sm sm:text-base"
             >
               "{{ classConfig.tagline }}"
             </blockquote>

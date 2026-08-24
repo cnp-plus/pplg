@@ -12,7 +12,6 @@ export type ThemeMode = "light" | "dark";
 
 const STORAGE_KEY = "pplg-theme";
 
-/** Mode awal diturunkan dari DOM (dipasang skrip inline sebelum paint). */
 /** Mode aktif saat ini (reaktif; diturunkan dari DOM oleh skrip inline <head>). */
 export const themeMode = ref<ThemeMode>(
   typeof document !== "undefined" &&

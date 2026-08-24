@@ -57,7 +57,7 @@ onMounted(() => {
         <div data-hero-reveal class="flex flex-wrap items-center gap-4 pt-2">
           <a
             href="#tentang"
-            class="inline-flex items-center gap-2 px-6 py-3.5 rounded text-sm font-medium text-white bg-primary-700 hover:bg-primary-900 dark:bg-primary-600 dark:hover:bg-primary-500 transition-colors shadow-sm"
+            class="inline-flex items-center gap-2 px-6 py-3.5 rounded text-sm font-medium text-white bg-primary-700 hover:bg-primary-900 dark:bg-primary-700 dark:hover:bg-primary-500 transition-colors shadow-sm"
           >
             <span>Kenali Kelas Kami</span>
             <ArrowRight class="w-4 h-4" />
