@@ -1,0 +1,29 @@
+# Makefile — wrapper ringkas untuk perintah npm proyek PPLG 1
+# Setara dengan: npm run <target>
+
+.PHONY: help install dev build preview fetch-ig test-fetch-ig clean
+
+help: ## Tampilkan bantuan seluruh target
+	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
+		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
+
+install: ## Pasang dependensi (npm install)
+	npm install
+
+dev: ## Server pengembangan di http://localhost:5173
+	npm run dev
+
+build: ## Type check (vue-tsc) + build produksi ke dist/
+	npm run build
+
+preview: ## Pratinjau hasil build produksi
+	npm run preview
+
+fetch-ig: ## Regenerasi feed Instagram dari INSTAGRAM_FEED_URL
+	npm run fetch:instagram
+
+test-fetch-ig: ## Uji pipeline IG dengan fixture lokal (offline)
+	npm run fetch:instagram -- --input scripts/__fixtures__/feed.sample.json
+
+clean: ## Hapus artefak build
+	rm -rf dist
