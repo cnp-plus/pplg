@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Navbar from "./components/Navbar.vue";
-import Hero from "./components/Hero.vue";
+import HeroSection from "./components/HeroSection.vue";
 import AboutSection from "./components/AboutSection.vue";
 import StructureSection from "./components/StructureSection.vue";
-import ShowcaseSection from "./components/ShowcaseSection.vue";
+import AchievementsSection from "./components/AchievementsSection.vue";
 import ActivitiesSection from "./components/ActivitiesSection.vue";
 import FooterSection from "./components/FooterSection.vue";
 </script>
@@ -17,10 +17,10 @@ import FooterSection from "./components/FooterSection.vue";
 
     <!-- Main Content Flow -->
     <main>
-      <Hero />
+      <HeroSection />
       <AboutSection />
       <StructureSection />
-      <ShowcaseSection />
+      <AchievementsSection />
       <ActivitiesSection />
     </main>
 

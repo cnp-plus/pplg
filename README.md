@@ -31,10 +31,10 @@ npm run preview # pratinjau hasil build produksi
 ├── src/
 │   ├── components/             # Satu komponen per section
 │   │   ├── Navbar.vue          # Navigasi sticky + toggle terang/gelap + menu mobile
-│   │   ├── Hero.vue            # Hero tipografi editorial + strip metrik
+│   │   ├── HeroSection.vue     # Hero tipografi editorial + strip metrik
 │   │   ├── AboutSection.vue    # Profil wali kelas, visi, pilar keahlian
 │   │   ├── StructureSection.vue# Pengurus harian (ledger) & divisi teknis
-│   │   ├── ShowcaseSection.vue # Karya siswa (baris asimetris) + prestasi (ledger)
+│   │   ├── AchievementsSection.vue # Rekam prestasi (ledger)
 │   │   ├── ActivitiesSection.vue # Timeline dokumentasi kegiatan
 │   │   └── FooterSection.vue   # Kontak, sosmed, form pesan (mailto)
 │   ├── composables/            # Composable (useTheme untuk tema terang/gelap, useReveal untuk motion anime.js)
