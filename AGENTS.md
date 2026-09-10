@@ -81,7 +81,7 @@ npm run fetch:instagram -- --input scripts/__fixtures__/feed.sample.json  # loca
 ```
 
 Gambar diunduh ke `public/ig/` (bukan CDN URL — CDN kadaluarsa).
-Workflow GitHub Actions harian 02:00 UTC; butuh repo secret `INSTAGRAM_FEED_URL`.
+Refresh via `scripts/refresh-feed.sh` cron harian 00:00 WIB di server; butuh env `INSTAGRAM_FEED_URL`.
 
 ## Komitmen
 

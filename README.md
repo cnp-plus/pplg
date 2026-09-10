@@ -77,11 +77,35 @@ Section **Kegiatan** menampilkan jejak *feed* Instagram kelas secara **statis**.
 4. Hasil ditulis ke `src/data/instagram.json` (`fetchedAt` + `posts` dengan `mediaUrl` lokal `/ig/...`).
 5. Berkas lama di `public/ig/` yang tidak lagi direferensi **dibersihkan** — *kecuali* berkas bernama `sample-*` (placeholder designer, tidak pernah dihapus).
 
-**Menyiapkan feed asli (produksi):**
+**Menyiapkan feed asli (produksi, server sendiri):**
+
+Situs dijalankan di VPS Linux + Nginx static. Refresh feed Instagram tidak lagi
+menggunakan GitHub Actions — dilakukan langsung di server via `scripts/refresh-feed.sh`
+yang dijadwalkan sebagai cron harian pukul **00:00 WIB**.
 
 1. Buat widget feed publik IG kelas di [Behold.so](https://behold.so) dan salin URL JSON feed-nya.
-2. Di repo GitHub, buka *Settings → Secrets and variables → Actions* → **New repository secret** bernama `INSTAGRAM_FEED_URL`, rekatkan URL feed.
-3. Workflow **`.github/workflows/refresh-instagram.yml`** otomatis mengambil ulang tiap hari pukul **00:00 WIB** (`schedule: cron '0 17 * * *'` — cron GitHub berjalan dalam UTC) **atau** bisa dipicu manual lewat *Run workflow* (`workflow_dispatch`). Bila ada perubahan pada `src/data/instagram.json` atau `public/ig/`, workflow meng-commit dengan pesan `chore: refresh instagram feed` dan mendorongnya.
+2. Di server, set env var `INSTAGRAM_FEED_URL` (export di crontab, `/etc/environment`,
+   atau pakai `systemd EnvironmentFile` — lihat komentar di `scripts/refresh-feed.sh`).
+3. Jadwalkan cron harian (pakai `TZ=Asia/Jakarta` agar 00:00 WIB tepat):
+   ```cron
+   TZ=Asia/Jakarta
+   0 0 * * * /path/to/pplg/scripts/refresh-feed.sh >> /var/log/pplg-feed.log 2>&1
+   ```
+4. Deploy awal / manual ke Nginx docroot via `scripts/deploy.sh`:
+   ```bash
+   WEB_ROOT=/var/www/pplg ./scripts/deploy.sh
+   ```
+   Contoh Nginx server block (`root` = `WEB_ROOT`):
+   ```nginx
+   server {
+       listen 80;
+       server_name example.com;
+       root /var/www/pplg;
+       index index.html;
+       location / { try_files $uri $uri/ /index.html; }
+   }
+   ```
+   Static file tidak perlu reload Nginx — cukup copy ulang ke `WEB_ROOT` setelah build.
 
 **Menjalankan secara lokal:**
 
@@ -93,7 +117,7 @@ INSTAGRAM_FEED_URL="https://..." npm run fetch:instagram
 node scripts/fetch-instagram.mjs --input scripts/__fixtures__/feed.sample.json
 ```
 
-> **Catatan:** `src/data/instagram.json` dan gambar di `public/ig/` adalah berkas **hasil** (generated). Jangan diedit tangan — jalankan kembali skrip atau biarkan workflow yang menggenerasinya. Placeholder `sample-*.svg` di `public/ig/` disimpan skrip tak terhapuskan; setelah feed asli aktif, posting sampel di JSON diganti secara alami oleh posting riil, dan berkas SVG placeholder dapat dihapus manual bila tidak lagi dipakai.
+> **Catatan:** `src/data/instagram.json` dan gambar di `public/ig/*.jpg` adalah berkas **hasil** (generated) dan **di-gitignore** — tidak di-commit ke repo. Pada *fresh clone*, `prebuild` (`scripts/ensure-instagram.mjs`) menciptakan fallback `{ "fetchedAt": "...", "posts": [] }` agar `vue-tsc` + `vite build` tetap lolos. Jangan diedit tangan — jalankan kembali skrip atau biarkan `scripts/refresh-feed.sh` yang menggenerasinya. Placeholder `sample-*.svg` di `public/ig/` disimpan skrip tak terhapuskan; setelah feed asli aktif, posting sampel di JSON diganti secara alami oleh posting riil, dan berkas SVG placeholder dapat dihapus manual bila tidak lagi dipakai.
 
 ## Palet Warna & Desain
 

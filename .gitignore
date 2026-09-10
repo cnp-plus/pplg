@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Hasil generate feed Instagram (dibuat di server via refresh-feed.sh, jangan commit)
+src/data/instagram.json
+public/ig/*
+!public/ig/sample-*.svg
