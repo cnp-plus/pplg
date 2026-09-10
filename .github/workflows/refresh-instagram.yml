@@ -6,8 +6,8 @@ name: Refresh Instagram Feed
 
 on:
   schedule:
-    # Daily at 02:00 UTC
-    - cron: "0 2 * * *"
+    # Daily at 00:00 WIB (17:00 UTC previous day; cron runs on UTC)
+    - cron: "0 17 * * *"
   workflow_dispatch: # Manual trigger
 
 permissions:

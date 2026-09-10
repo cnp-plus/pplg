@@ -81,7 +81,7 @@ Section **Kegiatan** menampilkan jejak *feed* Instagram kelas secara **statis**.
 
 1. Buat widget feed publik IG kelas di [Behold.so](https://behold.so) dan salin URL JSON feed-nya.
 2. Di repo GitHub, buka *Settings → Secrets and variables → Actions* → **New repository secret** bernama `INSTAGRAM_FEED_URL`, rekatkan URL feed.
-3. Workflow **`.github/workflows/refresh-instagram.yml`** otomatis mengambil ulang tiap hari pukul **02:00 UTC** (`schedule: cron '0 2 * * *'`) **atau** bisa dipicu manual lewat *Run workflow* (`workflow_dispatch`). Bila ada perubahan pada `src/data/instagram.json` atau `public/ig/`, workflow meng-commit dengan pesan `chore: refresh instagram feed` dan mendorongnya.
+3. Workflow **`.github/workflows/refresh-instagram.yml`** otomatis mengambil ulang tiap hari pukul **00:00 WIB** (`schedule: cron '0 17 * * *'` — cron GitHub berjalan dalam UTC) **atau** bisa dipicu manual lewat *Run workflow* (`workflow_dispatch`). Bila ada perubahan pada `src/data/instagram.json` atau `public/ig/`, workflow meng-commit dengan pesan `chore: refresh instagram feed` dan mendorongnya.
 
 **Menjalankan secara lokal:**
 
