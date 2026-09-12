@@ -1,54 +1,51 @@
 # CV Per Siswa
 
-## Arsitektur
+## Skema
 
-- `cv/template.php` — template PHP tunggal, membaca data JSON berdasarkan `slug` dari `$_GET['slug']`.
-- `cv/data/<slug>.json` — data tiap siswa dalam JSON (nama, ringkasan, pendidikan, keahlian, sosial).
-- `cv/<slug>.php` — file tipis: mengatur `$_GET['slug']` lalu `require`-kan `template.php`,
-  sehingga URL `/cv/<slug>.php` langsung jalan tanpa konfigurasi routing tambahan.
+Setiap siswa memiliki folder di `cv/<nama>/`. File entry adalah `cv/<nama>/index.php`.
+URL akhir: `/cv/<nama>/` — Nginx me-resolve ke `index.php` via direktif `index`.
 
 Folder `cv/` diletakkan di root repo (bukan `public/`) agar Vite tidak memproses `.php`.
 
 ## Cara Tambah CV Baru
 
-1. Buat `cv/data/<slug>.json` dengan field `name`, `summary`, `education`, `skills`, `social`.
-2. Buat `cv/<slug>.php` tipis:
-   ```php
-   <?php $_GET['slug'] = '<slug>'; require __DIR__ . '/template.php';
-   ```
-3. Tambahkan `cvSlug: "<slug>"` pada entri siswa yang bersangkutan di `src/data/classData.ts`.
-4. Deploy ulang — `cv/` otomatis disinkronkan ke `$WEB_ROOT/cv/` oleh `scripts/deploy.sh`
+1. Buat folder `cv/<nama>/`.
+2. Tambahkan `index.php` di dalam folder (pakai `cv/template.php` sebagai referensi, atau standalone).
+3. Letakkan aset (gambar, CSS, JS) relatif di dalam folder yang sama.
+4. Tambahkan `cvSlug: "<nama>"` pada **setiap entri siswa** yang bersangkutan di `src/data/classData.ts`
+   — semua grade (10, 11, 12) tempat nama muncul, termasuk sebagai officer.
+5. Deploy ulang — `cv/` otomatis disinkronkan ke `$WEB_ROOT/cv/` oleh `scripts/deploy.sh`
    dan `scripts/refresh-feed.sh`.
 
 ## Syarat Server
 
-- **PHP 7.4+** (dengan atau tanpa php-fpm; file `.php` harus diproses PHP, bukan disajikan statis).
-- **Nginx**: pastikan lokasi `/cv/` melayani `.php` via php-fpm. Contoh konfigurasi server block:
+- **PHP 7.4+** (dengan php-fpm). File `.php` harus diproses PHP, bukan disajikan statis.
+- **Nginx**: lokasi `/cv/` me-resolve directory URL ke `index.php`, lalu file `.php`
+  dijalankan via php-fpm. Contoh:
 
 ```nginx
 server {
     listen 80;
     server_name example.com;
 
+    # Static site utama
     root /var/www/pplg;
     index index.html;
-
     location / {
         try_files $uri $uri/ /index.html;
     }
 
-    # CV PHP — file .php di proses via php-fpm
+    # CV — directory URL /cv/<nama>/ resolve ke index.php
+    location /cv/ {
+        index index.php;
+    }
+
+    # CV PHP — semua file .php di cv/<nama>/ dijalankan via php-fpm
     location ~ ^/cv/.+\.php$ {
         fastcgi_pass unix:/run/php/php-fpm.sock;   # sesuaikan dengan lingkungan Anda
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
-    }
-
-    # Jangan biarkan JSON raw di cv/data/ diakses publik
-    location ~ ^/cv/data/ {
-        deny all;
-        return 404;
     }
 }
 ```

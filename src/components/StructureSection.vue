@@ -32,7 +32,7 @@ function gradeLabel(g: number): string {
 // Buka halaman CV (diserve Nginx+PHP-FPM terpisah dari Vite).
 function openCv(slug: string | undefined): void {
   if (!slug) return;
-  window.location.assign(`/cv/${slug}.php`);
+  window.location.assign(`/cv/${slug}/`);
 }
 
 // Atribut interaksi kartu dengan CV: role link + fokus keyboard + label.
