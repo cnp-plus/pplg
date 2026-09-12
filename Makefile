@@ -1,7 +1,7 @@
 # Makefile — wrapper ringkas untuk perintah npm proyek PPLG 1
 # Setara dengan: npm run <target>
 
-.PHONY: help install dev build preview fetch-ig test-fetch-ig refresh-feed deploy clean
+.PHONY: help install dev dev-cv build preview fetch-ig test-fetch-ig refresh-feed deploy clean
 
 help: ## Tampilkan bantuan seluruh target
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -12,6 +12,9 @@ install: ## Pasang dependensi (npm install)
 
 dev: ## Server pengembangan di http://localhost:5173
 	npm run dev
+
+dev-cv: ## Jalankan PHP built-in server untuk CV (dev lokal, port 8001)
+	./scripts/dev-cv.sh
 
 build: ## Type check (vue-tsc) + build produksi ke dist/
 	npm run build

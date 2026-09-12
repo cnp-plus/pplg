@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:cv": "./scripts/dev-cv.sh",
     "prebuild": "node scripts/ensure-instagram.mjs",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",

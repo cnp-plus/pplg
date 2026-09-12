@@ -51,3 +51,24 @@ server {
 ```
 
 > Ganti path `php-fpm.sock` sesuai instalasi Anda (bisa `127.0.0.1:9000` atau path socket khas distro).
+
+## Development Lokal (Vite)
+
+Di dev (`vite`, localhost:5173), Vite tidak mengeksekusi PHP — jadi klik kartu CV ke `/cv/<nama>/`
+tidak akan menampilkan halaman. Solusinya: jalankan PHP built-in server terpisah untuk folder
+`cv/`, lalu proxy `/cv/` dari Vite ke sana.
+
+**2 terminal dibutuhkan:**
+
+**Terminal 1** — PHP built-in server (docroot `cv/`, port 8001):
+```bash
+npm run dev:cv    # atau: ./scripts/dev-cv.sh
+```
+
+**Terminal 2** — Vite dev server (port 5173, proxy `/cv/` → `:8001`):
+```bash
+npm run dev
+```
+
+Setelah kedua server berjalan, klik kartu CV di `http://localhost:5173` akan me-resolve ke
+`http://127.0.0.1:8001/<nama>/` via proxy, dan PHP akan melayani `cv/<nama>/index.php`.
