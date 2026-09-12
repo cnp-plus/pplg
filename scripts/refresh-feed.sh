@@ -102,6 +102,18 @@ else
   log "cp selesai."
 fi
 
+# --- Sync cv/ ke WEB_ROOT/cv/ ---
+log "sync cv/ -> $WEB_ROOT/cv/"
+mkdir -p "$WEB_ROOT/cv"
+if command -v rsync >/dev/null 2>&1; then
+  rsync -a --delete "cv/" "$WEB_ROOT/cv/"
+  log "rsync cv selesai."
+else
+  log "rsync tidak tersedia, fallback cp -r cv"
+  cp -r "cv/." "$WEB_ROOT/cv/"
+  log "cp cv selesai."
+fi
+
 # --- Selesai ---
 log "Refresh feed selesai pada $(date -u '+%Y-%m-%dT%H:%M:%SZ')."
 log "Hint: buka http://<host>/ untuk verifikasi. Tidak perlu reload Nginx (static file)."

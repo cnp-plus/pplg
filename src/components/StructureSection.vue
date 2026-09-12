@@ -29,6 +29,33 @@ function gradeLabel(g: number): string {
   return `Kelas ${g}`;
 }
 
+// Buka halaman CV (diserve Nginx+PHP-FPM terpisah dari Vite).
+function openCv(slug: string | undefined): void {
+  if (!slug) return;
+  window.location.assign(`/cv/${slug}.php`);
+}
+
+// Atribut interaksi kartu dengan CV: role link + fokus keyboard + label.
+// Kartu tanpa cvSlug tetap <div> non-interaktif.
+function cardAttrs(name: string, slug?: string): Record<string, unknown> {
+  if (!slug) return {};
+  return {
+    role: "link",
+    tabindex: 0,
+    "aria-label": `Lihat CV ${name}`,
+  };
+}
+
+// Aktivasi keyboard (Enter/Space) — hanya saat kartu itu sendiri yang fokus,
+// jangan tangkap keydown dari tautan IG di dalamnya.
+function onCardKeydown(e: KeyboardEvent, slug?: string): void {
+  if (!slug || e.target !== e.currentTarget) return;
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    openCv(slug);
+  }
+}
+
 // Re-reveal cards on tab switch
 watch(activeGrade, () => {
   // Next tick: DOM has updated with new grade's roster
@@ -165,8 +192,16 @@ onUnmounted(() => {
               v-for="(officer, i) in activeStructure.officers"
               :key="officer.name"
               data-tab-reveal
-              :class="i === 0 ? 'md:col-start-2' : ''"
-              class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-300/60"
+              v-bind="cardAttrs(officer.name, officer.cvSlug)"
+              :class="[
+                i === 0 ? 'md:col-start-2' : '',
+                'bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-primary-700/40 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-300/60',
+                officer.cvSlug
+                  ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-700 dark:focus:ring-primary-300'
+                  : '',
+              ]"
+              @click="openCv(officer.cvSlug)"
+              @keydown="onCardKeydown($event, officer.cvSlug)"
             >
               <span
                 class="text-[10px] font-mono font-bold text-primary-700 dark:text-primary-300 uppercase tracking-widest"
@@ -199,6 +234,7 @@ onUnmounted(() => {
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                   :aria-label="`Instagram ${officer.name}`"
+                  @click.stop
                 >
                   <IconInstagram class="w-3.5 h-3.5" />
                   <span>{{ officer.igUsername }}</span>
@@ -213,7 +249,15 @@ onUnmounted(() => {
               v-for="student in activeStructure.students"
               :key="student.name"
               data-tab-reveal
-              class="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700/60 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-neutral-300 dark:hover:border-neutral-500"
+              v-bind="cardAttrs(student.name, student.cvSlug)"
+              :class="[
+                'bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700/60 rounded-lg p-4 flex flex-col items-center text-center space-y-3 transition-colors duration-200 hover:border-neutral-300 dark:hover:border-neutral-500',
+                student.cvSlug
+                  ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-700 dark:focus:ring-primary-300'
+                  : '',
+              ]"
+              @click="openCv(student.cvSlug)"
+              @keydown="onCardKeydown($event, student.cvSlug)"
             >
               <div
                 class="w-14 h-14 rounded-full overflow-hidden bg-neutral-700 dark:bg-neutral-600 flex items-center justify-center text-white font-bold text-base shrink-0"
@@ -241,6 +285,7 @@ onUnmounted(() => {
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                   :aria-label="`Instagram ${student.name}`"
+                  @click.stop
                 >
                   <IconInstagram class="w-3.5 h-3.5" />
                   <span>{{ student.igUsername }}</span>

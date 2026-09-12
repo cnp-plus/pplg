@@ -1,0 +1,25 @@
+{
+  "name": "Ahmad Yusuf Firdaus",
+  "summary": "Siswa PPLG 1 angkatan 12 yang tertarik pada pengembangan web dan mobile. Sedang membangun aplikasi CRUD pertama dengan Vue 3 dan Express.",
+  "education": [
+    {
+      "institution": "SMK Negeri 1 Leuwimunding",
+      "period": "2024/2026",
+      "major": "Pengembangan Perangkat Lunak dan Gim (PPLG)"
+    }
+  ],
+  "skills": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Vue 3",
+    "Express",
+    "Git"
+  ],
+  "social": [
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/_ahmd.ysf_/"
+    }
+  ]
+}

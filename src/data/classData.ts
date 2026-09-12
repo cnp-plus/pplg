@@ -226,6 +226,7 @@ export const gradeStructures: GradeStructure[] = [
         role: "Ketua Kelas",
         name: "Dwi Rafi Mazdudin",
         igUsername: "username.example",
+        cvSlug: "contoh-ketua-kelas",
       },
       {
         role: "Wakil Ketua Kelas",
@@ -234,7 +235,7 @@ export const gradeStructures: GradeStructure[] = [
       },
     ],
     students: [
-      { name: "Ahmad Yusuf Firdaus", igUsername: "_ahmd.ysf_" },
+      { name: "Ahmad Yusuf Firdaus", igUsername: "_ahmd.ysf_", cvSlug: "contoh-siswa-satu" },
       { name: "Alsyah", igUsername: "username.example" },
       { name: "Alya Nur Fauziah", igUsername: "username.example" },
       { name: "Azzahra Meita Putri", igUsername: "username.example" },

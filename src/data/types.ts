@@ -80,6 +80,7 @@ export interface Student {
   name: string;
   igUsername?: string;
   avatarUrl?: string;
+  cvSlug?: string;
 }
 
 export interface OfficerStudent extends Student {
